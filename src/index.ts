@@ -10,7 +10,7 @@ function typedExpect<T>(actual: T): Assertion<T> {
   return {
     to: {
       equal: (expected: T) => {
-        expect(actual).to.equal(expected);
+        expect(actual).to.deep.equal(expected);
       }
     }
   };

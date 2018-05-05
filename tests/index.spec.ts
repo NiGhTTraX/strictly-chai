@@ -18,4 +18,11 @@ describe('TypedExpect', function () {
       expect(() => typedExpect(true).to.equal(false)).to.throw;
     });
   });
+
+  describe('arrays', function() {
+    it('equals', function () {
+      typedExpect([1, 2, 3]).to.equal([1, 2, 3]);
+      expect(() => typedExpect([1, 2]).to.equal([2, 3])).to.throw;
+    });
+  });
 });
