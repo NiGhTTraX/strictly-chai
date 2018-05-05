@@ -1,22 +1,21 @@
 import { expect } from 'chai';
 
-interface PrimitiveAssertion<T> {
+interface ComparisonAssertion<T> {
   to: {
     equal: (expected: T) => void;
   }
 }
 
-interface ArrayAssertion<T> {
+interface InclusionAssertion<T> {
   to: {
-    equal: (expected: T) => void;
     contain: (member: T[keyof T]) => void;
   }
 }
 
 // noinspection JSUnusedLocalSymbols
-function typedExpect<Array>(array: Array): ArrayAssertion<Array>;
+function typedExpect<Array>(array: Array): ComparisonAssertion<Array> & InclusionAssertion<Array>;
 // noinspection JSUnusedLocalSymbols
-function typedExpect<T>(actual: T): PrimitiveAssertion<T>;
+function typedExpect<T>(actual: T): ComparisonAssertion<T>;
 
 function typedExpect(actual: any): any {
   if (typeof actual !== 'object') {
