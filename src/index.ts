@@ -6,16 +6,18 @@ interface ComparisonAssertion<T> {
   }
 }
 
+// noinspection JSUnusedLocalSymbols
+type Primitive = number | boolean | string;
+
 interface InclusionAssertion<T> {
   to: {
     contain: (member: T[keyof T]) => void;
   }
 }
-
 // noinspection JSUnusedLocalSymbols
 function typedExpect<Array>(array: Array): ComparisonAssertion<Array> & InclusionAssertion<Array>;
 // noinspection JSUnusedLocalSymbols
-function typedExpect<T>(actual: T): ComparisonAssertion<T>;
+function typedExpect<Primitive>(actual: Primitive): ComparisonAssertion<Primitive>;
 
 function typedExpect(actual: any): any {
   if (typeof actual !== 'object') {
