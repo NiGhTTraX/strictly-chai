@@ -1,4 +1,4 @@
-import { contains, equal, objectContains } from './assertions';
+import { equal, contains } from './assertions';
 
 type SingleValue = number | boolean;
 type Collection = string | Array<any> | object;
@@ -58,7 +58,7 @@ function typedExpect(actual: SingleValue | Collection): any {
   return {
     to: {
       equal: equal(actual),
-      contain: objectContains(actual)
+      contain: contains(actual)
     }
   };
 }
