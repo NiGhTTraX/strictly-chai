@@ -24,5 +24,10 @@ describe('TypedExpect', function () {
       typedExpect([1, 2, 3]).to.equal([1, 2, 3]);
       expect(() => typedExpect([1, 2]).to.equal([2, 3])).to.throw;
     });
+
+    it('contains', function () {
+      typedExpect([1, 2, 3]).to.contain(1);
+      expect(() => typedExpect([1, 2]).to.contain(3)).to.throw;
+    });
   });
 });
