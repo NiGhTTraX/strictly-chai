@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["env", { "target": { "node": "current" } }]
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "cwd": "packagejson",
+      "extensions": [".ts"]
+    }]
+  ]
+}
