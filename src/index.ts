@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { contains, equal } from './assertions';
 
 interface ComparisonAssertion<T> {
   to: {
@@ -35,15 +35,3 @@ function typedExpect(actual: any): any {
 }
 
 export default typedExpect;
-
-function equal(actual: any) {
-  return (expected: any) => {
-    expect(actual).to.deep.equal(expected);
-  };
-}
-
-function contains(actual: any) {
-  return (member: any) => {
-    expect(actual).to.contain(member);
-  };
-}
