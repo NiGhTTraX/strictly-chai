@@ -11,3 +11,9 @@ export function contains(actual: any) {
     expect(actual).to.contain(member);
   };
 }
+
+export function objectContains<T>(actual: T) {
+  return (partial: Partial<T>) => {
+    expect(actual).to.include(partial);
+  };
+}

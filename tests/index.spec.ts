@@ -34,5 +34,10 @@ describe('TypedExpect', function () {
       typedExpect('foobar').to.contain('foo');
       expect(() => typedExpect('foobar').to.contain('xxx')).to.throw();
     });
+
+    it('objects', function () {
+      typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 1 });
+      expect(() => typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 2 })).to.throw();
+    });
   });
 });

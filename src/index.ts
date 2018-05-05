@@ -1,7 +1,7 @@
-import { contains, equal } from './assertions';
+import { contains, equal, objectContains } from './assertions';
 
 type SingleValue = number | boolean;
-type Collection = string | Array<any>;
+type Collection = string | Array<any> | object;
 
 interface ComparisonAssertion<T> {
   to: {
@@ -24,13 +24,21 @@ interface StringAssertion {
   }
 }
 
+interface ObjectAssertion<T, K> {
+  to: {
+    contain: (partial: Partial<T>) => void;
+  }
+}
+
 // eslint-disable-next-line max-len
 function typedExpect(array: Array<any>): ComparisonAssertion<Array<any>> & InclusionAssertion<Array<any>>;
 function typedExpect(string: string): ComparisonAssertion<string> & StringAssertion;
 function typedExpect(actual: SingleValue): ComparisonAssertion<SingleValue>;
+// eslint-disable-next-line max-len
+function typedExpect<T, K extends keyof T>(object: T): ComparisonAssertion<T> & ObjectAssertion<T, K>;
 
 function typedExpect(actual: SingleValue | Collection): any {
-  if (typeof actual !== 'object' && typeof actual !== 'string') {
+  if (typeof actual === 'number' || typeof actual === 'boolean') {
     return {
       to: {
         equal: equal(actual)
@@ -38,10 +46,19 @@ function typedExpect(actual: SingleValue | Collection): any {
     };
   }
 
+  if (Array.isArray(actual) || typeof actual === 'string') {
+    return {
+      to: {
+        equal: equal(actual),
+        contain: contains(actual)
+      }
+    };
+  }
+
   return {
     to: {
       equal: equal(actual),
-      contain: contains(actual)
+      contain: objectContains(actual)
     }
   };
 }
