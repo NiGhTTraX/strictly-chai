@@ -24,6 +24,8 @@ interface StringAssertion {
   }
 }
 
+// This is separate from InclusionAssertion to be able to
+// use Partial<>.
 interface ObjectAssertion<T, K> {
   to: {
     contain: (partial: Partial<T>) => void;
