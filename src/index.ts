@@ -1,7 +1,7 @@
 import { equal, contains } from './assertions';
 
 type SingleValue = number | boolean;
-type Collection = string | Array<any> | object;
+type Collection = string | Array<any> | Set<any> | object;
 
 interface ComparisonAssertion<T> {
   to: {
@@ -11,7 +11,7 @@ interface ComparisonAssertion<T> {
 
 interface InclusionAssertion<T> {
   to: {
-    contain: (member: T[keyof T]) => void;
+    contain: (member: T) => void;
   }
 }
 
@@ -33,7 +33,7 @@ interface ObjectAssertion<T, K> {
 }
 
 // eslint-disable-next-line max-len
-function typedExpect(array: Array<any>): ComparisonAssertion<Array<any>> & InclusionAssertion<Array<any>>;
+function typedExpect<T>(array: Array<T> | Set<T>): ComparisonAssertion<Array<T> | Set<T>> & InclusionAssertion<T>;
 function typedExpect(string: string): ComparisonAssertion<string> & StringAssertion;
 function typedExpect(actual: SingleValue): ComparisonAssertion<SingleValue>;
 // eslint-disable-next-line max-len

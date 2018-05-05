@@ -27,6 +27,10 @@ describe('TypedExpect', function () {
       typedExpect({ foo: { bar: 3 } }).to.equal({ foo: { bar: 3 } });
       expect(() => typedExpect({ foo: 1 }).to.equal({ foo: 2 })).to.throw();
     });
+
+    it('sets', function () {
+      typedExpect(new Set([1, 2])).to.equal(new Set([1, 2]));
+    });
   });
 
   describe('contains', function() {
@@ -43,6 +47,11 @@ describe('TypedExpect', function () {
     it('objects', function () {
       typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 1 });
       expect(() => typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 2 })).to.throw();
+    });
+
+    it('sets', function () {
+      typedExpect(new Set([1, 2])).to.contain(2);
+      expect(() => typedExpect(new Set([1, 2])).to.contain(3)).to.throw();
     });
   });
 });
