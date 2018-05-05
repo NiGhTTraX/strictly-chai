@@ -22,6 +22,11 @@ describe('TypedExpect', function () {
       typedExpect([1, 2, 3]).to.equal([1, 2, 3]);
       expect(() => typedExpect([1, 2]).to.equal([2, 3])).to.throw();
     });
+
+    it('objects', function () {
+      typedExpect({ foo: { bar: 3 } }).to.equal({ foo: { bar: 3 } });
+      expect(() => typedExpect({ foo: 1 }).to.equal({ foo: 2 })).to.throw();
+    });
   });
 
   describe('contains', function() {
