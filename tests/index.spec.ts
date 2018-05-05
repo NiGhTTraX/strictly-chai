@@ -5,29 +5,29 @@ describe('TypedExpect', function () {
   describe('comparing primitives', function() {
     it('numbers', function () {
       typedExpect(3).to.equal(3);
-      expect(() => typedExpect(3).to.equal(4)).to.throw;
+      expect(() => typedExpect(3).to.equal(4)).to.throw();
     });
 
     it('strings', function () {
       typedExpect('foo').to.equal('foo');
-      expect(() => typedExpect('foo').to.equal('bar')).to.throw;
+      expect(() => typedExpect('foo').to.equal('bar')).to.throw();
     });
 
     it('booleans', function () {
       typedExpect(true).to.equal(true);
-      expect(() => typedExpect(true).to.equal(false)).to.throw;
+      expect(() => typedExpect(true).to.equal(false)).to.throw();
     });
   });
 
   describe('arrays', function() {
     it('equals', function () {
       typedExpect([1, 2, 3]).to.equal([1, 2, 3]);
-      expect(() => typedExpect([1, 2]).to.equal([2, 3])).to.throw;
+      expect(() => typedExpect([1, 2]).to.equal([2, 3])).to.throw();
     });
 
     it('contains', function () {
       typedExpect([1, 2, 3]).to.contain(1);
-      expect(() => typedExpect([1, 2]).to.contain(3)).to.throw;
+      expect(() => typedExpect([1, 2]).to.contain(3)).to.throw();
     });
   });
 });
