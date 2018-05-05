@@ -22,18 +22,14 @@ function typedExpect(actual: any): any {
   if (typeof actual !== 'object') {
     return {
       to: {
-        equal: (expected: any) => {
-          expect(actual).to.deep.equal(expected);
-        }
+        equal: equal(actual)
       }
     };
   }
 
   return {
     to: {
-      equal: (expected: any) => {
-        expect(actual).to.deep.equal(expected);
-      },
+      equal: equal(actual),
       contain: (member: any) => {
         expect(actual).to.contain(member);
       }
@@ -42,3 +38,9 @@ function typedExpect(actual: any): any {
 }
 
 export default typedExpect;
+
+function equal(actual: any) {
+  return (expected: any) => {
+    expect(actual).to.deep.equal(expected);
+  };
+}
