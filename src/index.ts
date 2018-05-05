@@ -29,9 +29,7 @@ function typedExpect(actual: any): any {
   return {
     to: {
       equal: equal(actual),
-      contain: (member: any) => {
-        expect(actual).to.contain(member);
-      }
+      contain: contains(actual)
     }
   };
 }
@@ -41,5 +39,11 @@ export default typedExpect;
 function equal(actual: any) {
   return (expected: any) => {
     expect(actual).to.deep.equal(expected);
+  };
+}
+
+function contains(actual: any) {
+  return (member: any) => {
+    expect(actual).to.contain(member);
   };
 }
