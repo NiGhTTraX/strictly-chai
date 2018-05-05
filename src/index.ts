@@ -1,26 +1,36 @@
 import { contains, equal } from './assertions';
 
+type SingleValue = number | boolean;
+type Collection = string | Array<any>;
+
 interface ComparisonAssertion<T> {
   to: {
     equal: (expected: T) => void;
   }
 }
 
-// noinspection JSUnusedLocalSymbols
-type Primitive = number | boolean | string;
-
 interface InclusionAssertion<T> {
   to: {
     contain: (member: T[keyof T]) => void;
   }
 }
-// noinspection JSUnusedLocalSymbols
-function typedExpect<Array>(array: Array): ComparisonAssertion<Array> & InclusionAssertion<Array>;
-// noinspection JSUnusedLocalSymbols
-function typedExpect<Primitive>(actual: Primitive): ComparisonAssertion<Primitive>;
 
-function typedExpect(actual: any): any {
-  if (typeof actual !== 'object') {
+// string[keyof string] is number for some reason so that's why
+// we have this separate interface instead of just using
+// InclusionAssertion<string>.
+interface StringAssertion {
+  to: {
+    contain: (char: string) => void;
+  }
+}
+
+// eslint-disable-next-line max-len
+function typedExpect(array: Array<any>): ComparisonAssertion<Array<any>> & InclusionAssertion<Array<any>>;
+function typedExpect(string: string): ComparisonAssertion<string> & StringAssertion;
+function typedExpect(actual: SingleValue): ComparisonAssertion<SingleValue>;
+
+function typedExpect(actual: SingleValue | Collection): any {
+  if (typeof actual !== 'object' && typeof actual !== 'string') {
     return {
       to: {
         equal: equal(actual)

@@ -30,4 +30,10 @@ describe('TypedExpect', function () {
       expect(() => typedExpect([1, 2]).to.contain(3)).to.throw();
     });
   });
+
+  describe('strings', function () {
+    it('contains', function () {
+      typedExpect('foobar').to.contain('foo');
+    });
+  });
 });
