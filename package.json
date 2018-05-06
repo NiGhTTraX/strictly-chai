@@ -8,6 +8,10 @@
     "url": "https://github.com/NiGhTTraX/typed-expect.git"
   },
   "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist",
+    "compile": "tsc --declaration --outDir ./dist",
+    "prepublish": "npm run build",
     "lint": "eslint --ext ts .",
     "test": "mocha --opts tests/mocha.opts 'tests/**/*.spec.{ts,tsx}'",
     "precommit": "lint-staged"

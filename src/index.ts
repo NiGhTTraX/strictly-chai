@@ -1,12 +1,12 @@
 import { equal, contains } from './assertions';
 
-interface ComparisonAssertion<T> {
+export interface ComparisonAssertion<T> {
   to: {
     equal: (expected: T) => void;
   }
 }
 
-interface InclusionAssertion<T> {
+export interface InclusionAssertion<T> {
   to: {
     contain: (member: T) => void;
   }
@@ -15,7 +15,7 @@ interface InclusionAssertion<T> {
 // string[keyof string] is number for some reason so that's why
 // we have this separate interface instead of just using
 // InclusionAssertion<string>.
-interface StringAssertion {
+export interface StringAssertion {
   to: {
     contain: (char: string) => void;
   }
@@ -23,7 +23,7 @@ interface StringAssertion {
 
 // This is separate from InclusionAssertion to be able to
 // use Partial<>.
-interface ObjectAssertion<T, K> {
+export interface ObjectAssertion<T, K> {
   to: {
     contain: (partial: Partial<T>) => void;
   }
