@@ -46,6 +46,7 @@ describe('TypedExpect', function () {
 
     it('objects', function () {
       typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 1 });
+      typedExpect({ foo: { bar: 2 } }).to.contain({ foo: { bar: 2 } });
       expect(() => typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 2 })).to.throw();
     });
 

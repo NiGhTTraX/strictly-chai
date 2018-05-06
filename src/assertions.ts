@@ -8,6 +8,6 @@ export function equal(actual: any) {
 
 export function contains(actual: any) {
   return (member: any) => {
-    expect(actual).to.contain(member);
+    expect(actual).to.deep.include(member);
   };
 }
