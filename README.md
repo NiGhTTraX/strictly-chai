@@ -1,4 +1,4 @@
-typed-expect
+strictly-chai
 ----
 
 > A statically typed subset of [chai](http://www.chaijs.com) assertions written
