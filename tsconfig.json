@@ -9,6 +9,9 @@
     "noUnusedLocals": false,
     "baseUrl": "."
   },
+  "include": [
+    "src/index.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

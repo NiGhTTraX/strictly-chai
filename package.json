@@ -2,11 +2,21 @@
   "name": "strictly-chai",
   "version": "0.0.1",
   "description": "A statically typed subset of chai assertions written in TypeScript",
-  "keywords": ["assert", "expect", "chai", "testing", "typed", "typescript", "bdd"],
+  "keywords": [
+    "assert",
+    "expect",
+    "chai",
+    "testing",
+    "typed",
+    "typescript",
+    "bdd"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/NiGhTTraX/strictly-chai.git"
   },
+  "main": "dist/index",
+  "types": "dist/index",
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
@@ -46,5 +56,6 @@
     "tsconfig-paths": "~3.3.1",
     "typescript": "~2.8.1",
     "typescript-eslint-parser": "~15.0.0"
-  }
+  },
+  "files": ["dist/**/*"]
 }
