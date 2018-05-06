@@ -1,7 +1,7 @@
 import { equal, contains } from './assertions';
 
 type SingleValue = number | boolean;
-type Collection = string | Array<any> | Set<any> | object;
+type Collection = string | Array<any> | Set<any> | Map<any, any> | object;
 
 interface ComparisonAssertion<T> {
   to: {
@@ -36,6 +36,8 @@ interface ObjectAssertion<T, K> {
 function typedExpect<T>(array: Array<T> | Set<T>): ComparisonAssertion<Array<T> | Set<T>> & InclusionAssertion<T>;
 function typedExpect(string: string): ComparisonAssertion<string> & StringAssertion;
 function typedExpect(actual: SingleValue): ComparisonAssertion<SingleValue>;
+// eslint-disable-next-line max-len
+function typedExpect<K, V>(actual: Map<K, V>): ComparisonAssertion<Map<K, V>> & InclusionAssertion<V>;
 // eslint-disable-next-line max-len
 function typedExpect<T, K extends keyof T>(object: T): ComparisonAssertion<T> & ObjectAssertion<T, K>;
 

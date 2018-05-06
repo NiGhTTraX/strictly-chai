@@ -53,5 +53,10 @@ describe('TypedExpect', function () {
       typedExpect(new Set([1, 2])).to.contain(2);
       expect(() => typedExpect(new Set([1, 2])).to.contain(3)).to.throw();
     });
+
+    it('maps', function () {
+      // TODO: should the assertion check keys, values, or entries?
+      typedExpect(new Map([[1, 'a'], [2, 'b']])).to.contain('b');
+    });
   });
 });
