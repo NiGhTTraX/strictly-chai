@@ -2,6 +2,10 @@
   "name": "typed-expect",
   "version": "0.0.1",
   "description": "Natural language test assertions for TypeScript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NiGhTTraX/typed-expect.git"
+  },
   "scripts": {
     "lint": "eslint --ext ts .",
     "test": "mocha --opts tests/mocha.opts 'tests/**/*.spec.{ts,tsx}'",
