@@ -1,8 +1,5 @@
 import { equal, contains } from './assertions';
 
-type SingleValue = number | boolean;
-type Collection = string | Array<any> | Set<any> | Map<any, any> | object;
-
 interface ComparisonAssertion<T> {
   to: {
     equal: (expected: T) => void;
@@ -35,13 +32,14 @@ interface ObjectAssertion<T, K> {
 // eslint-disable-next-line max-len
 function typedExpect<T>(array: Array<T> | Set<T>): ComparisonAssertion<Array<T> | Set<T>> & InclusionAssertion<T>;
 function typedExpect(string: string): ComparisonAssertion<string> & StringAssertion;
-function typedExpect(actual: SingleValue): ComparisonAssertion<SingleValue>;
+function typedExpect(actual: number): ComparisonAssertion<number>;
+function typedExpect(actual: boolean): ComparisonAssertion<boolean>;
 // eslint-disable-next-line max-len
 function typedExpect<K, V>(actual: Map<K, V>): ComparisonAssertion<Map<K, V>> & InclusionAssertion<V>;
 // eslint-disable-next-line max-len
 function typedExpect<T, K extends keyof T>(object: T): ComparisonAssertion<T> & ObjectAssertion<T, K>;
 
-function typedExpect(actual: SingleValue | Collection): any {
+function typedExpect(actual: any): any {
   if (typeof actual === 'number' || typeof actual === 'boolean') {
     return {
       to: {
