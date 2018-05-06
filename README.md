@@ -13,15 +13,21 @@ expect(new Set([1, 2])).to.contain('a');
 
 While the above is perfectly valid JS and chai will throw an AssertionError at
 runtime, it is desirable to turn that into a compile time error when using
-TypeScript. `@types/chai` declares all the arguments as `any` so using chai
-directly in TypeScript will not provide any type checking. This is where this
-library comes in. Using it instead of `chai.expect` in the assertion above will
+TypeScript.
+
+Using this library instead of `chai.expect` in the assertion above will
 fail to compile with the following:
 
 ```
 Error:(54, 47) TS2345: Argument of type '"a"' is not assignable
 to parameter of type 'number'.
 ```
+
+
+## But wait, what about `@types/chai`?
+
+`@types/chai` declares all the arguments as `any` so using chai
+directly in TypeScript will not provide any type checking.
 
 
 ## Usage
