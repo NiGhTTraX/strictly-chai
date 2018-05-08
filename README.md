@@ -34,6 +34,8 @@ directly in TypeScript will not provide any type checking.
 
 ![object-contains](./docs/object-contains.png)
 
+![demo](./docs/demo.gif)
+
 This library exports a subset of chai's [BDD API](http://www.chaijs.com/api/bdd/)
 so check out their docs on usage. The only difference is that the `.equal`
 assertion is by default deep (equivalent to `.deep.equal`).
