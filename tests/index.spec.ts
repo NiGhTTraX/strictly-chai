@@ -49,28 +49,38 @@ describe('TypedExpect', function () {
   describe('contains', function() {
     it('arrays', function () {
       typedExpect([1, 2, 3]).to.contain(1);
+      typedExpect([1, 2, 3]).to.not.contain(4);
       expect(() => typedExpect([1, 2]).to.contain(3)).to.throw();
+      expect(() => typedExpect([1, 2]).to.not.contain(2)).to.throw();
     });
 
     it('strings', function () {
       typedExpect('foobar').to.contain('foo');
+      typedExpect('foobar').to.not.contain('xxx');
       expect(() => typedExpect('foobar').to.contain('xxx')).to.throw();
+      expect(() => typedExpect('foobar').to.not.contain('foo')).to.throw();
     });
 
     it('objects', function () {
       typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 1 });
       typedExpect({ foo: { bar: 2 } }).to.contain({ foo: { bar: 2 } });
+      typedExpect({ foo: 1 }).to.not.contain({ foo: 2 });
       expect(() => typedExpect({ foo: 1, bar: 2 }).to.contain({ foo: 2 })).to.throw();
+      expect(() => typedExpect({ foo: 1 }).to.not.contain({ foo: 1 })).to.throw();
     });
 
     it('sets', function () {
       typedExpect(new Set([1, 2])).to.contain(2);
+      typedExpect(new Set([1, 2])).to.not.contain(3);
       expect(() => typedExpect(new Set([1, 2])).to.contain(3)).to.throw();
+      expect(() => typedExpect(new Set([1, 2])).to.not.contain(2)).to.throw();
     });
 
     it('maps', function () {
       // TODO: should the assertion check keys, values, or entries?
       typedExpect(new Map([[1, 'a'], [2, 'b']])).to.contain('b');
+      expect(() => typedExpect(new Map([[1, 'a'], [2, 'b']])).to.contain('c')).to.throw();
+      expect(() => typedExpect(new Map([[1, 'a']])).to.not.contain('a')).to.throw();
     });
   });
 });

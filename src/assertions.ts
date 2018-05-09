@@ -17,3 +17,9 @@ export function contains(actual: any) {
     expect(actual).to.deep.include(member);
   };
 }
+
+export function notContains(actual: any) {
+  return (member: any) => {
+    expect(actual).to.not.deep.include(member);
+  };
+}

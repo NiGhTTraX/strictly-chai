@@ -1,4 +1,4 @@
-import { equals, contains, notEquals } from './assertions';
+import { equals, contains, notEquals, notContains } from './assertions';
 
 export interface ScalarAssertion<T> {
   to: {
@@ -12,6 +12,9 @@ export interface ScalarAssertion<T> {
 export interface VectorAssertion<T> {
   to: {
     contain: (member: T) => void;
+    not: {
+      contain: (member: T) => void;
+    }
   }
 }
 
@@ -20,7 +23,10 @@ export interface VectorAssertion<T> {
 // InclusionAssertion<string>.
 export interface StringAssertion {
   to: {
-    contain: (char: string) => void;
+    contain: (needle: string) => void;
+    not: {
+      contain: (needle: string) => void;
+    }
   }
 }
 
@@ -29,6 +35,9 @@ export interface StringAssertion {
 export interface ObjectAssertion<T, K> {
   to: {
     contain: (partial: Partial<T>) => void;
+    not: {
+      contain: (partial: Partial<T>) => void;
+    }
   }
 }
 
@@ -46,6 +55,7 @@ function typedExpect(actual: any): any {
   const equal = equals(actual);
   const contain = contains(actual);
   const notEqual = notEquals(actual);
+  const notContain = notContains(actual);
 
   if (typeof actual === 'number' || typeof actual === 'boolean') {
     return {
@@ -63,7 +73,8 @@ function typedExpect(actual: any): any {
       equal,
       contain,
       not: {
-        equal: notEqual
+        equal: notEqual,
+        contain: notContain
       }
     }
   };
