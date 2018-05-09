@@ -42,7 +42,8 @@ export interface ObjectAssertion<T, K> {
 }
 
 // eslint-disable-next-line max-len
-function typedExpect<T>(array: Array<T> | Set<T>): ScalarAssertion<Array<T> | Set<T>> & VectorAssertion<T>;
+function typedExpect<T>(array: Array<T>): ScalarAssertion<Array<T>> & VectorAssertion<T>;
+function typedExpect<T>(array: Set<T>): ScalarAssertion<Set<T>> & VectorAssertion<T>;
 function typedExpect(string: string): ScalarAssertion<string> & StringAssertion;
 function typedExpect(actual: number): ScalarAssertion<number>;
 function typedExpect(actual: boolean): ScalarAssertion<boolean>;
