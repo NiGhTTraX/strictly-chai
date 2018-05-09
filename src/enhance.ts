@@ -4,7 +4,6 @@ export type BaseExpectType = typeof typedExpect;
 export type BaseAssertionType = ReturnType<BaseExpectType>;
 
 export interface PluginInterface<T, I> {
-// eslint-disable-next-line max-len
   (originalExpect: BaseExpectType): ((actual: T) => I) & BaseExpectType;
 }
 
