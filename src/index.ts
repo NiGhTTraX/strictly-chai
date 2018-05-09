@@ -1,8 +1,11 @@
-import { equals, contains } from './assertions';
+import { equals, contains, notEquals } from './assertions';
 
 export interface ComparisonAssertion<T> {
   to: {
     equal: (expected: T) => void;
+    not: {
+      equal: (expected: T) => void;
+    }
   }
 }
 
@@ -46,7 +49,10 @@ function typedExpect(actual: any): any {
   if (typeof actual === 'number' || typeof actual === 'boolean') {
     return {
       to: {
-        equal
+        equal,
+        not: {
+          equal: notEquals(actual)
+        }
       }
     };
   }
@@ -55,7 +61,10 @@ function typedExpect(actual: any): any {
     return {
       to: {
         equal,
-        contain
+        contain,
+        not: {
+          equal: notEquals(actual)
+        }
       }
     };
   }
@@ -63,7 +72,10 @@ function typedExpect(actual: any): any {
   return {
     to: {
       equal,
-      contain
+      contain,
+      not: {
+        equal: notEquals(actual)
+      }
     }
   };
 }

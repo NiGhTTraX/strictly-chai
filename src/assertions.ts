@@ -6,6 +6,12 @@ export function equals(actual: any) {
   };
 }
 
+export function notEquals(actual: any) {
+  return (expected: any) => {
+    expect(actual).to.not.deep.equal(expected);
+  };
+}
+
 export function contains(actual: any) {
   return (member: any) => {
     expect(actual).to.deep.include(member);

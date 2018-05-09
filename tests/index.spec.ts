@@ -5,31 +5,44 @@ describe('TypedExpect', function () {
   describe('equal', function() {
     it('numbers', function () {
       typedExpect(3).to.equal(3);
+      typedExpect(3).to.not.equal(4);
       expect(() => typedExpect(3).to.equal(4)).to.throw();
+      expect(() => typedExpect(3).to.not.equal(3)).to.throw();
     });
 
     it('strings', function () {
       typedExpect('foo').to.equal('foo');
+      typedExpect('foo').to.not.equal('bar');
       expect(() => typedExpect('foo').to.equal('bar')).to.throw();
+      expect(() => typedExpect('foo').to.not.equal('foo')).to.throw();
     });
 
     it('booleans', function () {
       typedExpect(true).to.equal(true);
+      typedExpect(true).to.not.equal(false);
       expect(() => typedExpect(true).to.equal(false)).to.throw();
+      expect(() => typedExpect(true).to.not.equal(true)).to.throw();
     });
 
     it('arrays', function () {
       typedExpect([1, 2, 3]).to.equal([1, 2, 3]);
+      typedExpect([1, 2, 3]).to.not.equal([4, 5, 6]);
       expect(() => typedExpect([1, 2]).to.equal([2, 3])).to.throw();
+      expect(() => typedExpect([1, 2]).to.not.equal([1, 2])).to.throw();
     });
 
     it('objects', function () {
       typedExpect({ foo: { bar: 3 } }).to.equal({ foo: { bar: 3 } });
+      typedExpect({ foo: { bar: 3 } }).to.not.equal({ foo: { bar: 4 } });
       expect(() => typedExpect({ foo: 1 }).to.equal({ foo: 2 })).to.throw();
+      expect(() => typedExpect({ foo: 1 }).to.not.equal({ foo: 1 })).to.throw();
     });
 
     it('sets', function () {
       typedExpect(new Set([1, 2])).to.equal(new Set([1, 2]));
+      typedExpect(new Set([1, 2])).to.not.equal(new Set([3, 4]));
+      expect(() => typedExpect(new Set([1, 2])).to.equal(new Set([3, 4]))).to.throw();
+      expect(() => typedExpect(new Set([1, 2])).to.not.equal(new Set([1, 2]))).to.throw();
     });
   });
 
