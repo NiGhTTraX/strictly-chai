@@ -9,5 +9,6 @@ describe('Sinon plugin', function () {
     const appleSpie = spy();
     appleSpie();
     sinonExpect(appleSpie).called();
+    sinonExpect(2).to.equal(2);
   });
 });

@@ -3,7 +3,6 @@ import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
 import {
   PluginInterface,
-  typeOfOriginalSubject,
   typeOfOriginalAssertion,
   typeOfExpect
 } from './enhance';
@@ -21,7 +20,7 @@ export interface SinonExpect {
 
 const sinonPlugin: PluginInterface<Spy, SinonExpect> = (typedExpect: typeOfExpect) => {
   function sinonExpect(actual: Spy): SinonExpect;
-  function sinonExpect(actual: typeOfOriginalSubject): typeOfOriginalAssertion;
+  function sinonExpect(actual: any): typeOfOriginalAssertion;
 
   function sinonExpect(actual: any): any {
     const assertion = typedExpect(actual);
