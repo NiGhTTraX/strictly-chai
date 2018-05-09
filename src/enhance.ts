@@ -1,11 +1,11 @@
 import typedExpect from './index';
 
-export type typeOfExpect = typeof typedExpect;
-export type typeOfOriginalAssertion = ReturnType<typeOfExpect>;
+export type BaseExpectType = typeof typedExpect;
+export type BaseAssertionType = ReturnType<BaseExpectType>;
 
 export interface PluginInterface<T, I> {
 // eslint-disable-next-line max-len
-  (originalExpect: typeOfExpect): ((actual: T) => I) & typeOfExpect;
+  (originalExpect: BaseExpectType): ((actual: T) => I) & BaseExpectType;
 }
 
 export default function enhance<T, I>(plugin: PluginInterface<T, I>) {

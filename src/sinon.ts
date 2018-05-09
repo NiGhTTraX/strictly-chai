@@ -3,8 +3,8 @@ import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
 import {
   PluginInterface,
-  typeOfOriginalAssertion,
-  typeOfExpect
+  BaseAssertionType,
+  BaseExpectType
 } from './enhance';
 
 chai.use(sinonChai);
@@ -18,12 +18,12 @@ export interface SinonExpect {
   called: () => void;
 }
 
-const sinonPlugin: PluginInterface<Spy, SinonExpect> = (typedExpect: typeOfExpect) => {
+const sinonPlugin: PluginInterface<Spy, SinonExpect> = (baseExpect: BaseExpectType) => {
   function sinonExpect(actual: Spy): SinonExpect;
-  function sinonExpect(actual: any): typeOfOriginalAssertion;
+  function sinonExpect(actual: any): BaseAssertionType;
 
   function sinonExpect(actual: any): any {
-    const assertion = typedExpect(actual);
+    const assertion = baseExpect(actual);
 
     return Object.assign(assertion, {
       called: () => {
