@@ -11,6 +11,6 @@ describe('Sinon plugin', function () {
   it('called', function () {
     const appleSpie = spy();
     appleSpie();
-    sinonExpect(appleSpie).called();
+    sinonExpect(appleSpie).to.have.been.called();
   });
 });

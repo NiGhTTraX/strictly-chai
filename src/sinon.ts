@@ -12,18 +12,32 @@ export interface Spy {
 }
 
 export interface SinonExpect {
-  called: () => void;
+  to: {
+    have: {
+      been: {
+        called: () => void;
+      }
+    }
+  }
 }
+
+const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
 
 const sinonPlugin: PluginInterface<Spy, SinonExpect> = (baseExpect: BaseExpectType) => {
   function sinonExpect(actual: Spy): SinonExpect;
   function sinonExpect(actual: any): BaseAssertionType;
 
-  function sinonExpect(actual: any): any {
-    if (typeof (actual as Spy).called !== 'undefined') {
+  function sinonExpect(actual: any): SinonExpect | BaseAssertionType {
+    if (isSpy(actual)) {
       return {
-        called: () => {
-          expect(actual).to.have.been.called;
+        to: {
+          have: {
+            been: {
+              called: () => {
+                expect(actual).to.have.been.called;
+              }
+            }
+          }
         }
       };
     }
