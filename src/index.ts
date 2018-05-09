@@ -1,6 +1,6 @@
 import { equals, contains, notEquals } from './assertions';
 
-export interface ComparisonAssertion<T> {
+export interface ScalarAssertion<T> {
   to: {
     equal: (expected: T) => void;
     not: {
@@ -9,7 +9,7 @@ export interface ComparisonAssertion<T> {
   }
 }
 
-export interface InclusionAssertion<T> {
+export interface VectorAssertion<T> {
   to: {
     contain: (member: T) => void;
   }
@@ -33,14 +33,14 @@ export interface ObjectAssertion<T, K> {
 }
 
 // eslint-disable-next-line max-len
-function typedExpect<T>(array: Array<T> | Set<T>): ComparisonAssertion<Array<T> | Set<T>> & InclusionAssertion<T>;
-function typedExpect(string: string): ComparisonAssertion<string> & StringAssertion;
-function typedExpect(actual: number): ComparisonAssertion<number>;
-function typedExpect(actual: boolean): ComparisonAssertion<boolean>;
+function typedExpect<T>(array: Array<T> | Set<T>): ScalarAssertion<Array<T> | Set<T>> & VectorAssertion<T>;
+function typedExpect(string: string): ScalarAssertion<string> & StringAssertion;
+function typedExpect(actual: number): ScalarAssertion<number>;
+function typedExpect(actual: boolean): ScalarAssertion<boolean>;
 // eslint-disable-next-line max-len
-function typedExpect<K, V>(actual: Map<K, V>): ComparisonAssertion<Map<K, V>> & InclusionAssertion<V>;
+function typedExpect<K, V>(actual: Map<K, V>): ScalarAssertion<Map<K, V>> & VectorAssertion<V>;
 // eslint-disable-next-line max-len
-function typedExpect<T, K extends keyof T>(object: T): ComparisonAssertion<T> & ObjectAssertion<T, K>;
+function typedExpect<T, K extends keyof T>(object: T): ScalarAssertion<T> & ObjectAssertion<T, K>;
 
 function typedExpect(actual: any): any {
   const equal = equals(actual);
