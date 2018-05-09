@@ -44,6 +44,35 @@ describe('TypedExpect', function () {
       expect(() => typedExpect(new Set([1, 2])).to.equal(new Set([3, 4]))).to.throw();
       expect(() => typedExpect(new Set([1, 2])).to.not.equal(new Set([1, 2]))).to.throw();
     });
+
+    it('custom type', function () {
+      interface Foo {
+        foo: string;
+        bar: () => void;
+      }
+
+      const noop = () => {};
+
+      const x: Foo = {
+        foo: 'foo',
+        bar: noop
+      };
+
+      const y: Foo = {
+        foo: 'foo',
+        bar: noop
+      };
+
+      const z: Foo = {
+        foo: 'bar',
+        bar: noop
+      };
+
+      typedExpect(x).to.equal(y);
+      typedExpect(x).to.not.equal(z);
+      expect(() => typedExpect(x).to.equal(z)).to.throw();
+      expect(() => typedExpect(x).to.not.equal(x)).to.throw();
+    });
   });
 
   describe('contains', function() {
@@ -81,6 +110,35 @@ describe('TypedExpect', function () {
       typedExpect(new Map([[1, 'a'], [2, 'b']])).to.contain('b');
       expect(() => typedExpect(new Map([[1, 'a'], [2, 'b']])).to.contain('c')).to.throw();
       expect(() => typedExpect(new Map([[1, 'a']])).to.not.contain('a')).to.throw();
+    });
+
+    it('custom type', function () {
+      interface Foo {
+        foo: string;
+        bar: () => void;
+      }
+
+      const noop = () => {};
+
+      const x: Foo = {
+        foo: 'foo',
+        bar: noop
+      };
+
+      const y: Foo = {
+        foo: 'foo',
+        bar: noop
+      };
+
+      const z: Foo = {
+        foo: 'bar',
+        bar: noop
+      };
+
+      typedExpect(x).to.contain(y);
+      typedExpect(x).to.not.contain(z);
+      expect(() => typedExpect(x).to.contain(z)).to.throw();
+      expect(() => typedExpect(x).to.not.contain(x)).to.throw();
     });
   });
 });
