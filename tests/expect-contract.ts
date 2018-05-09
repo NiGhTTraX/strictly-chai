@@ -3,6 +3,11 @@ import { BaseExpectType } from '../src';
 
 export default function contractTests(implementation: BaseExpectType) {
   describe('equal', function () {
+    it('null', function () {
+      implementation(null).to.equal(null);
+      implementation(undefined).to.equal(undefined);
+    });
+
     it('numbers', function () {
       implementation(3).to.equal(3);
       implementation(3).to.not.equal(4);

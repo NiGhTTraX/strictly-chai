@@ -21,7 +21,7 @@ export interface SinonExpect {
   }
 }
 
-const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
+const isSpy = (actual: Spy | any): actual is Spy => actual && (actual as Spy).called !== undefined;
 
 const sinonPlugin: PluginInterface<Spy, SinonExpect> = (baseExpect: BaseExpectType) => {
   function sinonExpect(actual: Spy): SinonExpect;
