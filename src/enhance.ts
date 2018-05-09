@@ -1,7 +1,4 @@
-import typedExpect from './index';
-
-export type BaseExpectType = typeof typedExpect;
-export type BaseAssertionType = ReturnType<BaseExpectType>;
+import typedExpect, { BaseExpectType } from './index';
 
 export interface PluginInterface<T, I> {
   (originalExpect: BaseExpectType): ((actual: T) => I) & BaseExpectType;

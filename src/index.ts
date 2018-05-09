@@ -1,4 +1,4 @@
-import { equals, contains, notEquals, notContains } from './assertions';
+import { contains, equals, notContains, notEquals } from './assertions';
 
 export interface ScalarAssertion<T> {
   to: {
@@ -82,3 +82,6 @@ function typedExpect(actual: any): any {
 }
 
 export default typedExpect;
+
+export type BaseExpectType = typeof typedExpect;
+export type BaseAssertionType = ReturnType<BaseExpectType>;

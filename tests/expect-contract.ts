@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { BaseExpectType } from '../src/enhance';
+import { BaseExpectType } from '../src';
 
 export default function contractTests(implementation: BaseExpectType) {
   describe('equal', function () {

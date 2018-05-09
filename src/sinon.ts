@@ -1,11 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
-import {
-  PluginInterface,
-  BaseAssertionType,
-  BaseExpectType
-} from './enhance';
+import { PluginInterface } from './enhance';
+import { BaseAssertionType, BaseExpectType } from './index';
 
 chai.use(sinonChai);
 const { expect } = chai;
