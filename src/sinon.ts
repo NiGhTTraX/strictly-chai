@@ -23,13 +23,15 @@ const sinonPlugin: PluginInterface<Spy, SinonExpect> = (baseExpect: BaseExpectTy
   function sinonExpect(actual: any): BaseAssertionType;
 
   function sinonExpect(actual: any): any {
-    const assertion = baseExpect(actual);
+    if (typeof (actual as Spy).called !== 'undefined') {
+      return {
+        called: () => {
+          expect(actual).to.have.been.called;
+        }
+      };
+    }
 
-    return Object.assign(assertion, {
-      called: () => {
-        expect(actual).to.have.been.called;
-      }
-    });
+    return baseExpect(actual);
   }
 
   return sinonExpect;
