@@ -1,39 +1,39 @@
-import { contains, equal } from 'src/assertions';
+import { contains, equals } from 'src/assertions';
 import { expect } from 'chai';
 
 describe('Assertions', function() {
   describe('equal', function() {
     it('primitives', function() {
-      equal(1)(1);
-      equal('a')('a');
-      equal(true)(true);
-      expect(() => equal(1)(2)).to.throw();
-      expect(() => equal('a')('b')).to.throw();
-      expect(() => equal(true)(false)).to.throw();
+      equals(1)(1);
+      equals('a')('a');
+      equals(true)(true);
+      expect(() => equals(1)(2)).to.throw();
+      expect(() => equals('a')('b')).to.throw();
+      expect(() => equals(true)(false)).to.throw();
     });
 
     it('objects', function() {
-      equal({ foo: 1 })({ foo: 1 });
-      equal({ foo: { bar: 1 } })({ foo: { bar: 1 } });
-      expect(() => equal({ foo: 1 })({ foo: 2 })).to.throw();
-      expect(() => equal({ foo: { bar: 1 } })({ foo: { bar: 2 } })).to.throw();
+      equals({ foo: 1 })({ foo: 1 });
+      equals({ foo: { bar: 1 } })({ foo: { bar: 1 } });
+      expect(() => equals({ foo: 1 })({ foo: 2 })).to.throw();
+      expect(() => equals({ foo: { bar: 1 } })({ foo: { bar: 2 } })).to.throw();
     });
 
     it('arrays', function() {
-      equal([1, 2, 3])([1, 2, 3]);
-      equal([1, 2, [3, 4]])([1, 2, [3, 4]]);
-      expect(() => equal([1, 2, 3])([1, 2, 4])).to.throw();
-      expect(() => equal([1, 2, [3, 4]])([1, 2, [3, 5]])).to.throw();
+      equals([1, 2, 3])([1, 2, 3]);
+      equals([1, 2, [3, 4]])([1, 2, [3, 4]]);
+      expect(() => equals([1, 2, 3])([1, 2, 4])).to.throw();
+      expect(() => equals([1, 2, [3, 4]])([1, 2, [3, 5]])).to.throw();
     });
 
     it('sets', function() {
-      equal(new Set([1, 2, 3]))(new Set([1, 2, 3]));
-      expect(() => equal(new Set([1, 2]))(new Set([2, 3]))).to.throw();
+      equals(new Set([1, 2, 3]))(new Set([1, 2, 3]));
+      expect(() => equals(new Set([1, 2]))(new Set([2, 3]))).to.throw();
     });
 
     it('maps', function () {
-      equal(new Map([[1, 2]]))(new Map([[1, 2]]));
-      expect(() => equal(new Map([[1, 2]]))(new Map([[1, 3]]))).to.throw();
+      equals(new Map([[1, 2]]))(new Map([[1, 2]]));
+      expect(() => equals(new Map([[1, 2]]))(new Map([[1, 3]]))).to.throw();
     });
   });
 

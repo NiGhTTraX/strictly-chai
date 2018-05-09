@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-export function equal(actual: any) {
+export function equals(actual: any) {
   return (expected: any) => {
     expect(actual).to.deep.equal(expected);
   };

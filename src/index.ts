@@ -1,4 +1,4 @@
-import { equal, contains } from './assertions';
+import { equals, contains } from './assertions';
 
 export interface ComparisonAssertion<T> {
   to: {
@@ -40,10 +40,13 @@ function typedExpect<K, V>(actual: Map<K, V>): ComparisonAssertion<Map<K, V>> & 
 function typedExpect<T, K extends keyof T>(object: T): ComparisonAssertion<T> & ObjectAssertion<T, K>;
 
 function typedExpect(actual: any): any {
+  const equal = equals(actual);
+  const contain = contains(actual);
+
   if (typeof actual === 'number' || typeof actual === 'boolean') {
     return {
       to: {
-        equal: equal(actual)
+        equal
       }
     };
   }
@@ -51,16 +54,16 @@ function typedExpect(actual: any): any {
   if (Array.isArray(actual) || typeof actual === 'string') {
     return {
       to: {
-        equal: equal(actual),
-        contain: contains(actual)
+        equal,
+        contain
       }
     };
   }
 
   return {
     to: {
-      equal: equal(actual),
-      contain: contains(actual)
+      equal,
+      contain
     }
   };
 }
