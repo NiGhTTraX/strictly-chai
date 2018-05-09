@@ -45,25 +45,14 @@ function typedExpect<T, K extends keyof T>(object: T): ComparisonAssertion<T> & 
 function typedExpect(actual: any): any {
   const equal = equals(actual);
   const contain = contains(actual);
+  const notEqual = notEquals(actual);
 
   if (typeof actual === 'number' || typeof actual === 'boolean') {
     return {
       to: {
         equal,
         not: {
-          equal: notEquals(actual)
-        }
-      }
-    };
-  }
-
-  if (Array.isArray(actual) || typeof actual === 'string') {
-    return {
-      to: {
-        equal,
-        contain,
-        not: {
-          equal: notEquals(actual)
+          equal: notEqual
         }
       }
     };
@@ -74,7 +63,7 @@ function typedExpect(actual: any): any {
       equal,
       contain,
       not: {
-        equal: notEquals(actual)
+        equal: notEqual
       }
     }
   };
