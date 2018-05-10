@@ -1,9 +1,24 @@
-import typedExpect, { BaseExpectType } from './index';
+import typedExpect, { BaseAssertionType } from './index';
 
-export interface ExpectPlugin<T, I> {
-  (originalExpect: BaseExpectType): ((actual: T) => I) & BaseExpectType;
+export interface IsNewType<T> {
+  (actual: any): actual is T;
 }
 
-export default function enhance<T, I>(plugin: ExpectPlugin<T, I>) {
-  return plugin(typedExpect);
+export interface Expect<T, I> {
+  (actual: T): I;
+}
+
+export default function enhance<T, I>(isNewType: IsNewType<T>, expect: Expect<T, I>) {
+  function enhancedExpect(actual: T): I;
+  function enhancedExpect(actual: any): BaseAssertionType;
+
+  function enhancedExpect(actual: any) {
+    if (actual && isNewType(actual)) {
+      return expect(actual);
+    }
+
+    return typedExpect(actual);
+  }
+
+  return enhancedExpect;
 }

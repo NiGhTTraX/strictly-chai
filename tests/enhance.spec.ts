@@ -1,6 +1,5 @@
 import contractTests from './expect-contract';
-import enhance, { ExpectPlugin } from '../src/enhance';
-import { BaseAssertionType } from '../src';
+import enhance, { Expect } from '../src/enhance';
 
 describe('Enhance', function () {
   interface CustomType {
@@ -10,25 +9,12 @@ describe('Enhance', function () {
   interface CustomAssertion {
   }
 
-  const plugin: ExpectPlugin<CustomType, CustomAssertion> = baseExpect => {
-    function enhancedExpect(actual: CustomType): CustomAssertion;
-    function enhancedExpect(actual: any): BaseAssertionType;
+  const isCustom = (actual: any): actual is CustomType => ((actual as CustomType).customProp);
+  const customExpect: Expect<CustomType, CustomAssertion> = () => ({});
 
-    function enhancedExpect(actual: any) {
-      if (actual && (actual as CustomType).customProp !== undefined) {
-        return {
-        };
-      }
+  const enhancedExpect = enhance(isCustom, customExpect);
 
-      return baseExpect(actual);
-    }
-
-    return enhancedExpect;
-  };
-
-  const enhancedExpect = enhance(plugin);
-
-  it('should return the enhanced expect', function () {
+  describe('should return the original expect', function () {
     contractTests(enhancedExpect);
   });
 });

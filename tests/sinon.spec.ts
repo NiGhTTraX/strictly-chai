@@ -1,11 +1,11 @@
 import enhance from 'src/enhance';
-import sinonPlugin from 'src/sinon';
+import { isSpy, spyExpect } from 'src/sinon';
 import { spy } from 'sinon';
 import { expect } from 'chai';
 import contractTests from './expect-contract';
 
 describe('Sinon plugin', function () {
-  const sinonExpect = enhance(sinonPlugin);
+  const sinonExpect = enhance(isSpy, spyExpect);
 
   contractTests(sinonExpect);
 

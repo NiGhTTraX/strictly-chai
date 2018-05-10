@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
-import { ExpectPlugin } from './enhance';
-import { BaseAssertionType, BaseExpectType } from './index';
+import { Expect } from './enhance';
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -30,46 +29,31 @@ export interface SinonExpect {
   }
 }
 
-const isSpy = (actual: Spy | any): actual is Spy => actual && (actual as Spy).called !== undefined;
+export const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
 
-const sinonPlugin: ExpectPlugin<Spy, SinonExpect> = (baseExpect: BaseExpectType) => {
-  function sinonExpect(actual: Spy): SinonExpect;
-  function sinonExpect(actual: any): BaseAssertionType;
-
-  function sinonExpect(actual: any): SinonExpect | BaseAssertionType {
-    if (isSpy(actual)) {
-      return {
-        to: {
-          not: {
-            have: {
-              been: {
-                called: () => {
-                  expect(actual).to.not.have.been.called;
-                },
-                calledWith: (...args: any[]) => {
-                  expect(actual).to.not.have.been.calledWith(...args);
-                }
-              }
-            }
+export const spyExpect: Expect<Spy, SinonExpect> = (actual: Spy) => ({
+  to: {
+    not: {
+      have: {
+        been: {
+          called: () => {
+            expect(actual).to.not.have.been.called;
           },
-          have: {
-            been: {
-              called: () => {
-                expect(actual).to.have.been.called;
-              },
-              calledWith: (...args: any[]) => {
-                expect(actual).to.have.been.calledWith(...args);
-              }
-            }
+          calledWith: (...args: any[]) => {
+            expect(actual).to.not.have.been.calledWith(...args);
           }
         }
-      };
+      }
+    },
+    have: {
+      been: {
+        called: () => {
+          expect(actual).to.have.been.called;
+        },
+        calledWith: (...args: any[]) => {
+          expect(actual).to.have.been.calledWith(...args);
+        }
+      }
     }
-
-    return baseExpect(actual);
   }
-
-  return sinonExpect;
-};
-
-export default sinonPlugin;
+});
