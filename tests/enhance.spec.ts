@@ -25,4 +25,14 @@ describe('Enhance', function () {
   it('should return the enhanced expect', function () {
     expect(enhancedExpect({ customProp: true }).customAssert('foobar')).to.equal('foobar');
   });
+
+  it('should be idempotent', function () {
+    const enhancedExpect2 = enhance(isCustom, customExpect);
+
+    expect(
+      enhancedExpect2({ customProp: true }).customAssert('foobar')
+    ).to.equal(
+      enhancedExpect({ customProp: true }).customAssert('foobar')
+    );
+  });
 });
