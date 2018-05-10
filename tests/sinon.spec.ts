@@ -11,9 +11,12 @@ describe('Sinon plugin', function () {
 
   it('called', function () {
     const appleSpie = spy();
+
     sinonExpect(appleSpie).to.not.have.been.called();
     expect(() => sinonExpect(appleSpie).to.have.been.called()).to.throw();
+
     appleSpie();
+
     sinonExpect(appleSpie).to.have.been.called();
     expect(() => sinonExpect(appleSpie).to.not.have.been.called()).to.throw();
   });
