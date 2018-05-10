@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import contractTests from './expect-contract';
-import enhance, { Expect } from '../src/enhance';
+import overload, { Expect } from '../src/overload';
 import typedExpect from '../src';
 
-describe('Enhance', function () {
+describe('Overload', function () {
   interface CustomType {
     customProp: boolean;
   }
@@ -17,23 +17,23 @@ describe('Enhance', function () {
     customAssert: (foo: string) => foo
   });
 
-  const enhancedExpect = enhance(typedExpect, isCustom, customExpect);
+  const overloadedExpect = overload(typedExpect, isCustom, customExpect);
 
   describe('should return the original expect', function () {
-    contractTests(enhancedExpect);
+    contractTests(overloadedExpect);
   });
 
-  it('should return the enhanced expect', function () {
-    expect(enhancedExpect({ customProp: true }).customAssert('foobar')).to.equal('foobar');
+  it('should return the overloaded expect', function () {
+    expect(overloadedExpect({ customProp: true }).customAssert('foobar')).to.equal('foobar');
   });
 
   it('should be idempotent', function () {
-    const enhancedExpect2 = enhance(typedExpect, isCustom, customExpect);
+    const overloadedExpect2 = overload(typedExpect, isCustom, customExpect);
 
     expect(
-      enhancedExpect2({ customProp: true }).customAssert('foobar')
+      overloadedExpect2({ customProp: true }).customAssert('foobar')
     ).to.equal(
-      enhancedExpect({ customProp: true }).customAssert('foobar')
+      overloadedExpect({ customProp: true }).customAssert('foobar')
     );
   });
 
@@ -51,9 +51,9 @@ describe('Enhance', function () {
       customAssert2: (foo: number) => foo
     });
 
-    const enhancedExpect2 = enhance(enhancedExpect, isCustom2, customExpect2);
+    const overloadedExpect2 = overload(overloadedExpect, isCustom2, customExpect2);
 
-    expect(enhancedExpect2({ customProp2: true }).customAssert2(42)).to.equal(42);
-    expect(enhancedExpect2({ customProp: true }).customAssert('foobar')).to.equal('foobar');
+    expect(overloadedExpect2({ customProp2: true }).customAssert2(42)).to.equal(42);
+    expect(overloadedExpect2({ customProp: true }).customAssert('foobar')).to.equal('foobar');
   });
 });

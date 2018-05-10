@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
-import { Expect } from './enhance';
+import { Expect } from './overload';
 
 chai.use(sinonChai);
 const { expect } = chai;
