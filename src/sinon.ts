@@ -17,12 +17,14 @@ export interface SinonExpect {
       have: {
         been: {
           called: () => void;
+          calledWith: (...args: any[]) => void;
         }
       }
     }
     have: {
       been: {
         called: () => void;
+        calledWith: (...args: any[]) => void;
       }
     }
   }
@@ -43,6 +45,9 @@ const sinonPlugin: ExpectPlugin<Spy, SinonExpect> = (baseExpect: BaseExpectType)
               been: {
                 called: () => {
                   expect(actual).to.not.have.been.called;
+                },
+                calledWith: (...args: any[]) => {
+                  expect(actual).to.not.have.been.calledWith(...args);
                 }
               }
             }
@@ -51,6 +56,9 @@ const sinonPlugin: ExpectPlugin<Spy, SinonExpect> = (baseExpect: BaseExpectType)
             been: {
               called: () => {
                 expect(actual).to.have.been.called;
+              },
+              calledWith: (...args: any[]) => {
+                expect(actual).to.have.been.calledWith(...args);
               }
             }
           }
