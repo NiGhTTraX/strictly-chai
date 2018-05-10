@@ -13,6 +13,13 @@ export interface Spy {
 
 export interface SinonExpect {
   to: {
+    not: {
+      have: {
+        been: {
+          called: () => void;
+        }
+      }
+    }
     have: {
       been: {
         called: () => void;
@@ -31,6 +38,15 @@ const sinonPlugin: PluginInterface<Spy, SinonExpect> = (baseExpect: BaseExpectTy
     if (isSpy(actual)) {
       return {
         to: {
+          not: {
+            have: {
+              been: {
+                called: () => {
+                  expect(actual).to.not.have.been.called;
+                }
+              }
+            }
+          },
           have: {
             been: {
               called: () => {
