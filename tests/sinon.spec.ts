@@ -3,9 +3,10 @@ import { isSpy, spyExpect } from 'src/sinon';
 import { spy } from 'sinon';
 import { expect } from 'chai';
 import contractTests from './expect-contract';
+import typedExpect from '../src';
 
 describe('Sinon plugin', function () {
-  const sinonExpect = enhance(isSpy, spyExpect);
+  const sinonExpect = enhance(typedExpect, isSpy, spyExpect);
 
   contractTests(sinonExpect);
 
