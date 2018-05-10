@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
-import { PluginInterface } from './enhance';
+import { ExpectPlugin } from './enhance';
 import { BaseAssertionType, BaseExpectType } from './index';
 
 chai.use(sinonChai);
@@ -30,7 +30,7 @@ export interface SinonExpect {
 
 const isSpy = (actual: Spy | any): actual is Spy => actual && (actual as Spy).called !== undefined;
 
-const sinonPlugin: PluginInterface<Spy, SinonExpect> = (baseExpect: BaseExpectType) => {
+const sinonPlugin: ExpectPlugin<Spy, SinonExpect> = (baseExpect: BaseExpectType) => {
   function sinonExpect(actual: Spy): SinonExpect;
   function sinonExpect(actual: any): BaseAssertionType;
 
