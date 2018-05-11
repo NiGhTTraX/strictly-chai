@@ -47,7 +47,7 @@ export default function expectTypeErrors(fileName: string) {
 }
 
 function compile(fileName: string, options: ts.CompilerOptions): CompilationError[] {
-  const program = ts.createProgram([fileName], options);
+  const program = ts.createProgram([fileName], Object.assign({}, options, { noEmit: true }));
 
   const emitResult = program.emit();
   const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
