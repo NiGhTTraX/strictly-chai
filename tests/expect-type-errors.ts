@@ -28,7 +28,7 @@ export default function expectTypeErrors(fileName: string) {
   const errorsByLine = errors.reduce((acc: Map<number, boolean>, { line, column, message }) => {
     expect(message).to.match(
       /not assignable/,
-      `Non type error detected on ${fileName}:${line},${column}`
+      `Non type error detected on ${fileName}:${line}:${column}`
     );
 
     expect(acc.get(line), `More than 1 error detected on ${fileName}:${line} (${lines[line]})`)
@@ -39,7 +39,7 @@ export default function expectTypeErrors(fileName: string) {
   }, new Map());
 
   lines.forEach((line, i) => {
-    if (line.indexOf(').') !== -1) {
+    if (/xpect\(.*\)\./.test(line)) {
       expect(errorsByLine.get(i + 1), `No error detected on ${fileName}:${i + 1} (${line})`)
         .to.not.be.undefined;
     }
