@@ -41,15 +41,12 @@ export interface ObjectAssertion<T, K> {
   }
 }
 
-// eslint-disable-next-line max-len
 function typedExpect<T>(array: Array<T>): ScalarAssertion<Array<T>> & VectorAssertion<T>;
 function typedExpect<T>(array: Set<T>): ScalarAssertion<Set<T>> & VectorAssertion<T>;
 function typedExpect(string: string): ScalarAssertion<string> & StringAssertion;
 function typedExpect(actual: number): ScalarAssertion<number>;
 function typedExpect(actual: boolean): ScalarAssertion<boolean>;
-// eslint-disable-next-line max-len
 function typedExpect<K, V>(actual: Map<K, V>): ScalarAssertion<Map<K, V>> & VectorAssertion<V>;
-// eslint-disable-next-line max-len
 function typedExpect<T, K extends keyof T>(object: T): ScalarAssertion<T> & ObjectAssertion<T, K>;
 
 function typedExpect(actual: any): any {
