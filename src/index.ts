@@ -3,9 +3,7 @@ import { contains, equals, notContains, notEquals } from './assertions';
 export interface ScalarAssertion<T> {
   to: {
     equal: (expected: T) => void;
-    not: {
-      equal: (expected: T) => void;
-    }
+    not: ScalarAssertion<T>
   }
 }
 
@@ -13,7 +11,7 @@ export interface VectorAssertion<T> {
   to: {
     contain: (member: T) => void;
     not: {
-      contain: (member: T) => void;
+      contain: VectorAssertion<T>
     }
   }
 }
@@ -25,7 +23,7 @@ export interface StringAssertion {
   to: {
     contain: (needle: string) => void;
     not: {
-      contain: (needle: string) => void;
+      contain: StringAssertion
     }
   }
 }
@@ -36,7 +34,7 @@ export interface ObjectAssertion<T, K> {
   to: {
     contain: (partial: Partial<T>) => void;
     not: {
-      contain: (partial: Partial<T>) => void;
+      contain: ObjectAssertion<T, K>
     }
   }
 }
