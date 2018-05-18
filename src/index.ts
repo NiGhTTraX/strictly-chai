@@ -93,4 +93,4 @@ export type BaseAssertionType<T, K, V> =
   : T extends number ? ScalarAssertion<number>
   : T extends boolean ? ScalarAssertion<boolean>
   : T extends Map<K, V> ? ScalarAssertion<Map<K, V>> & VectorAssertion<V>
-  : ScalarAssertion<T> & ObjectAssertion<V, K>;
+  : ScalarAssertion<T> & ObjectAssertion<T, K>;

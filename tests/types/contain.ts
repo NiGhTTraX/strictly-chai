@@ -4,6 +4,7 @@ typedExpect([1]).to.contain('1');
 typedExpect(['1']).to.contain(1);
 typedExpect([true]).to.contain(1);
 typedExpect([{ foo: 1 }]).to.contain(1);
+typedExpect([{ foo: 1 }]).to.contain('foo');
 typedExpect([{ foo: 1 }]).to.contain({ foo: '1' });
 
 typedExpect(new Set([1])).to.contain('1');

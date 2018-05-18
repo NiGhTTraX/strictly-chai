@@ -67,3 +67,6 @@ function sinonExpect(actual: any): any {
 }
 
 export default sinonExpect;
+
+// eslint-disable-next-line space-infix-ops
+export type SinonAssertionType<T, K, V> = T extends Spy ? SinonExpect : BaseAssertionType<T, K, V>;

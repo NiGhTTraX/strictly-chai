@@ -1,4 +1,4 @@
-import sinonExpect from 'src/sinon';
+import sinonExpect, { SinonAssertionType } from 'src/sinon';
 import { spy } from 'sinon';
 import { expect } from 'chai';
 
@@ -103,5 +103,24 @@ describe('Sinon plugin', function () {
     sinonExpect(appleSpie).to.not.have.been.calledWith(4);
     expect(() => sinonExpect(appleSpie).to.have.been.calledWith(4)).to.throw();
     expect(() => sinonExpect(appleSpie).to.not.have.been.calledWith(1, 2, 3)).to.throw();
+  });
+
+  it('can be extended', function() {
+    interface CustomType { custom: boolean; }
+    interface CustomAssertion { customAssert: (x: number) => number; }
+
+    function customExpect(actual: CustomType): CustomAssertion;
+    function customExpect<T, K, V>(actual: T): SinonAssertionType<T, K, V>;
+    function customExpect<T, K, V>(actual: any): any {
+      if ((actual as CustomType).custom) {
+        return {
+          customAssert: (x: number) => x
+        };
+      }
+      return sinonExpect(actual);
+    }
+
+    expect(customExpect({ custom: true }).customAssert(2)).to.equal(2);
+    customExpect({ notCustom: true }).to.contain({ notCustom: true });
   });
 });
