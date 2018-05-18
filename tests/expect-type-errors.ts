@@ -10,6 +10,12 @@ interface CompilationError {
   line: number;
   column: number;
   message: string;
+  code: number;
+}
+
+enum CompilerErrorCode {
+  INCOMPATIBLE_ARG = 2345,
+  NO_COMMON_PROPERTIES = 2559,
 }
 
 /**
@@ -25,11 +31,14 @@ export default function expectTypeErrors(fileName: string) {
   const errors = compile(fileName, compilerOptions);
   const lines = fs.readFileSync(fileName, { encoding: 'utf-8' }).split('\n');
 
-  const errorsByLine = errors.reduce((acc: Map<number, boolean>, { line, column, message }) => {
-    expect(message).to.match(
-      /not assignable/,
-      `Non type error detected on ${fileName}:${line}:${column}`
-    );
+  const errorsByLine = errors.reduce((
+    acc: Map<number, boolean>,
+    { line, column, message, code }
+  ) => {
+    expect([
+      CompilerErrorCode.INCOMPATIBLE_ARG,
+      CompilerErrorCode.NO_COMMON_PROPERTIES
+    ], `Non type error detected on ${fileName}:${line}:${column} ${message}`).to.include(code);
 
     expect(acc.get(line), `More than 1 error detected on ${fileName}:${line} (${lines[line]})`)
       .to.be.undefined;
@@ -61,6 +70,7 @@ function compile(fileName: string, options: ts.CompilerOptions): CompilationErro
       return {
         line: line + 1,
         column: character + 1,
+        code: diagnostic.code,
         message
       };
     }
