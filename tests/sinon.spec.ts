@@ -110,8 +110,8 @@ describe('Sinon plugin', function () {
     interface CustomAssertion { customAssert: (x: number) => number; }
 
     function customExpect(actual: CustomType): CustomAssertion;
-    function customExpect<T, K, V>(actual: T): SinonAssertionType<T, K, V>;
-    function customExpect<T, K, V>(actual: any): any {
+    function customExpect<T>(actual: T): SinonAssertionType<T>;
+    function customExpect<T>(actual: any): any {
       if ((actual as CustomType).custom) {
         return {
           customAssert: (x: number) => x

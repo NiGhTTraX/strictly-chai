@@ -83,11 +83,11 @@ export default typedExpect;
 export type BaseExpectType = typeof typedExpect;
 
 // eslint-disable-next-line space-infix-ops
-export type BaseAssertionType<T, K, V> =
-  T extends Array<V> ? ScalarAssertion<Array<V>> & VectorAssertion<V>
-  : T extends Set<V> ? ScalarAssertion<Set<V>> & VectorAssertion<V>
+export type BaseAssertionType<T> =
+  T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<V>
+  : T extends Set<infer V> ? ScalarAssertion<Set<V>> & VectorAssertion<V>
   : T extends string ? ScalarAssertion<string> & StringAssertion
   : T extends number ? ScalarAssertion<number>
   : T extends boolean ? ScalarAssertion<boolean>
-  : T extends Map<K, V> ? ScalarAssertion<Map<K, V>> & VectorAssertion<V>
-  : ScalarAssertion<T> & ObjectAssertion<T, K>;
+  : T extends Map<infer K, infer V> ? ScalarAssertion<Map<K, V>> & VectorAssertion<V>
+  : ScalarAssertion<T> & ObjectAssertion<T, keyof T>;

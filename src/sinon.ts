@@ -32,7 +32,7 @@ export interface SinonExpect {
 export const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
 
 function sinonExpect(actual: Spy) : SinonExpect;
-function sinonExpect<T, K, V>(actual: T): BaseAssertionType<T, K, V>;
+function sinonExpect<T>(actual: T): BaseAssertionType<T>;
 function sinonExpect(actual: any): any {
   if (actual && isSpy(actual)) {
     return {
@@ -69,4 +69,4 @@ function sinonExpect(actual: any): any {
 export default sinonExpect;
 
 // eslint-disable-next-line space-infix-ops
-export type SinonAssertionType<T, K, V> = T extends Spy ? SinonExpect : BaseAssertionType<T, K, V>;
+export type SinonAssertionType<T> = T extends Spy ? SinonExpect : BaseAssertionType<T>;
