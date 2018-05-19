@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { extend, Expect, IsType, Plugin } from 'src/extend';
+import { extend, Expect, IsType, Plugin } from '../src/extend';
 
 export interface CustomType {
   customProp: boolean;

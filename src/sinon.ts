@@ -1,5 +1,5 @@
 import * as sinonChai from 'sinon-chai';
-import { Plugin } from 'src/extend';
+import { Plugin } from './extend';
 
 import ChaiStatic = Chai.ChaiStatic;
 

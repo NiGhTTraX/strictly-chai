@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import typedExpect from 'src/index';
+import typedExpect from '../src/index';
 
 describe('TypedExpect', function () {
   describe('equal', function () {

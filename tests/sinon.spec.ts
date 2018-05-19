@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import { spy } from 'sinon';
-import sinonPlugin from 'src/sinon';
+import sinonPlugin from '../src/sinon';
 
 const { expect } = chai;
 

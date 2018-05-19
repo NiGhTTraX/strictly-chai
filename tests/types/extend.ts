@@ -1,5 +1,5 @@
-import { extend } from 'src/extend';
-import { customPlugin, customPlugin2 } from 'tests/extend.spec';
+import { extend } from '../../src/extend';
+import { customPlugin, customPlugin2 } from '../extend.spec';
 
 const overloadedExpect = extend(customPlugin);
 const overloadedExpect2 = extend(customPlugin, customPlugin2);

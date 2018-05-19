@@ -1,5 +1,5 @@
-import { contains, equals } from 'src/assertions';
 import { expect } from 'chai';
+import { contains, equals } from '../src/assertions';
 
 describe('Assertions', function() {
   describe('equal', function() {
