@@ -1,5 +1,6 @@
 {
   "presets": [
-    ["env", { "target": { "node": "current" } }]
-  ],
+    "@babel/typescript",
+    ["@babel/env", { "target": { "node": "current" } }]
+  ]
 }
