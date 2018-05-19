@@ -23,7 +23,7 @@
     "compile": "tsc --declaration --outDir ./dist",
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext ts .",
-    "test": "mocha --opts tests/mocha.opts 'tests/**/*.spec.{ts,tsx}'",
+    "test": "mocha --opts tests/mocha.opts",
     "precommit": "lint-staged"
   },
   "lint-staged": {
