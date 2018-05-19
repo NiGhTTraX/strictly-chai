@@ -1,29 +1,6 @@
-import sinonExpect, { SinonAssertionType } from '../../src/sinon';
+import { spy } from 'sinon';
+import sinonExpect from '../../src/sinon';
 
-sinonExpect(null).to.equal(2);
-sinonExpect(undefined).to.equal(2);
-sinonExpect(2).to.equal('2');
-sinonExpect('foo').to.equal(2);
-sinonExpect(true).to.equal(2);
-sinonExpect([1]).to.equal(2);
-sinonExpect(new Set([1])).to.equal(2);
-sinonExpect(new Map([[1, 2]])).to.equal(2);
-sinonExpect({ foo: 2 }).to.equal(2);
-sinonExpect({ foo: 2 }).to.contain('foo');
-
-interface CustomType { custom: boolean; }
-interface CustomAssertion { customAssert: (x: number) => number; }
-
-function customExpect(actual: CustomType): CustomAssertion;
-function customExpect<T>(actual: T): SinonAssertionType<T>;
-function customExpect<T>(actual: any): any {
-  if ((actual as CustomType).custom) {
-    return {
-      customAssert: (x: number) => x
-    };
-  }
-  return sinonExpect(actual);
-}
-
-customExpect({ custom: true }).customAssert('2');
-customExpect({ notCustom: true }).to.contain('2');
+const appleSpie = spy();
+sinonExpect(appleSpie).to.have.been.called(true);
+sinonExpect(appleSpie).to.have.been.calledWith();
