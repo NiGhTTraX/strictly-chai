@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import overload, { Expect } from '../src/overload';
+import overload, { Expect, Plugin } from '../src/overload';
 
 export interface CustomType {
   customProp: boolean;
@@ -14,8 +14,13 @@ export const customExpect: Expect<CustomType, CustomAssertion> = () => ({
   customAssert: (foo: string) => foo
 });
 
+export const customPlugin: Plugin<CustomType, CustomAssertion> = {
+  isType: isCustom,
+  expect: customExpect
+};
+
 describe('Overload', function () {
-  const overloadedExpect = overload(isCustom, customExpect);
+  const overloadedExpect = overload(customPlugin);
 
   it('should return the original expect', function () {
     overloadedExpect({ foo: 'bar' }).to.contain({ foo: 'bar' });

@@ -1,7 +1,7 @@
 import overload from 'src/overload';
-import { customExpect, isCustom } from 'tests/overload.spec';
+import { customPlugin } from 'tests/overload.spec';
 
-const overloadedExpect = overload(isCustom, customExpect);
+const overloadedExpect = overload(customPlugin);
 
 overloadedExpect(null).to.equal(false);
 overloadedExpect(2).to.equal('2');
