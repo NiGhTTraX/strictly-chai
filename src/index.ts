@@ -80,8 +80,6 @@ function typedExpect(actual: any): any {
 
 export default typedExpect;
 
-export type BaseExpectType = typeof typedExpect;
-
 // eslint-disable-next-line space-infix-ops
 export type BaseAssertionType<T> =
   T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<V>
