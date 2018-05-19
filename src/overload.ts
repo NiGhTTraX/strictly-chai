@@ -16,7 +16,7 @@ export interface Plugin<T, I> {
 /**
  * Overload typedExpect to support new types.
  */
-export function overload<NewType, NewAssertion>(plugin: Plugin<NewType, NewAssertion>) {
+export function overload1<NewType, NewAssertion>(plugin: Plugin<NewType, NewAssertion>) {
   function overloadedExpect(actual: NewType): NewAssertion;
   function overloadedExpect<T>(actual: T): BaseAssertionType<T>;
 
@@ -50,3 +50,17 @@ export function overload2<T1, R1, T2, R2>(p1: Plugin<T1, R1>, p2: Plugin<T2, R2>
 
   return overloadedExpect;
 }
+
+
+// eslint-disable-next-line max-len
+function overload<T1, R1>(plugin: Plugin<T1, R1>): ((actual: T1) => R1) & (<T>(actual: T) => BaseAssertionType<T>);
+// eslint-disable-next-line max-len
+function overload<T1, R1, T2, R2>(p1: Plugin<T1, R1>, p2: Plugin<T2, R2>): ((actual: T1) => R1) & ((actual: T2) => R2) & (<T>(actual: T) => BaseAssertionType<T>);
+function overload(...p: Plugin<any, any>[]) {
+  if (p.length === 1) {
+    return overload1(p[0]);
+  }
+  return overload2(p[0], p[1]);
+}
+
+export { overload };
