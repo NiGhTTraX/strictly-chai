@@ -1,7 +1,6 @@
-import * as sinonChai from 'sinon-chai';
 import { Plugin } from './extend';
 
-import ChaiStatic = Chai.ChaiStatic;
+const sinonChai = require('sinon-chai');
 
 export interface Spy {
   called: boolean;
@@ -28,7 +27,7 @@ export interface SinonExpect {
 
 export const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
 
-const plugin: Plugin<Spy, SinonExpect> = (chai: ChaiStatic) => {
+const plugin: Plugin<Spy, SinonExpect> = chai => {
   chai.use(sinonChai);
   const { expect } = chai;
 

@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import typedExpect, { BaseAssertionType } from './index';
 
-import ChaiStatic = Chai.ChaiStatic;
+type Chai = typeof chai;
 
 export interface IsType<T> {
   (actual: any): actual is T;
@@ -12,7 +12,7 @@ export interface Expect<T, I> {
 }
 
 export interface Plugin<T, I> {
-  (chai: ChaiStatic): {
+  (chai: Chai): {
     expect: Expect<T, I>;
     isType: IsType<T>;
   }
