@@ -14,10 +14,10 @@ export const customExpect: Expect<CustomType, CustomAssertion> = () => ({
   customAssert: (foo: string) => foo
 });
 
-export const customPlugin: Plugin<CustomType, CustomAssertion> = {
+export const customPlugin: Plugin<CustomType, CustomAssertion> = () => ({
   isType: isCustom,
   expect: customExpect
-};
+});
 
 export interface CustomType2 {
   customProp2: boolean;
@@ -33,12 +33,12 @@ export const customExpect2: Expect<CustomType2, CustomAssertion2> = () => ({
   customAssert2: (foo: number) => foo
 });
 
-export const customPlugin2: Plugin<CustomType2, CustomAssertion2> = {
+export const customPlugin2: Plugin<CustomType2, CustomAssertion2> = () => ({
   isType: isCustom2,
   expect: customExpect2
-};
+});
 
-describe('Overload', function () {
+describe('Extend', function () {
   const overloadedExpect = extend(customPlugin);
   const overloadedExpect2 = extend(customPlugin, customPlugin2);
 

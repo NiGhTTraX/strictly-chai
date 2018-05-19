@@ -1,8 +1,12 @@
-import sinonExpect from 'src/sinon';
+import * as chai from 'chai';
 import { spy } from 'sinon';
-import { expect } from 'chai';
+import sinonPlugin from 'src/sinon';
+
+const { expect } = chai;
 
 describe('Sinon expect', function () {
+  const sinonExpect = sinonPlugin(chai).expect;
+
   it('called', function () {
     const appleSpie = spy();
 

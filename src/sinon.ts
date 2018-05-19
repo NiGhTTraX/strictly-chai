@@ -1,8 +1,7 @@
-import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
+import { Plugin } from 'src/extend';
 
-chai.use(sinonChai);
-const { expect } = chai;
+import ChaiStatic = Chai.ChaiStatic;
 
 export interface Spy {
   called: boolean;
@@ -29,33 +28,42 @@ export interface SinonExpect {
 
 export const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
 
-export default function sinonExpect(actual: Spy) : SinonExpect {
-  return {
-    to: {
-      not: {
+const plugin: Plugin<Spy, SinonExpect> = (chai: ChaiStatic) => {
+  chai.use(sinonChai);
+  const { expect } = chai;
+
+  function sinonExpect(actual: Spy): SinonExpect {
+    return {
+      to: {
+        not: {
+          have: {
+            been: {
+              called: () => {
+                // eslint-disable-next-line no-unused-expressions
+                expect(actual).to.not.have.been.called;
+              },
+              calledWith: (...args: any[]) => {
+                expect(actual).to.not.have.been.calledWith(...args);
+              }
+            }
+          }
+        },
         have: {
           been: {
             called: () => {
               // eslint-disable-next-line no-unused-expressions
-              expect(actual).to.not.have.been.called;
+              expect(actual).to.have.been.called;
             },
             calledWith: (...args: any[]) => {
-              expect(actual).to.not.have.been.calledWith(...args);
+              expect(actual).to.have.been.calledWith(...args);
             }
           }
         }
-      },
-      have: {
-        been: {
-          called: () => {
-            // eslint-disable-next-line no-unused-expressions
-            expect(actual).to.have.been.called;
-          },
-          calledWith: (...args: any[]) => {
-            expect(actual).to.have.been.calledWith(...args);
-          }
-        }
       }
-    }
-  };
-}
+    };
+  }
+
+  return { expect: sinonExpect, isType: isSpy };
+};
+
+export default plugin;
