@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Expect, extend, Plugin } from 'src/extend';
+import { extend, Expect, IsType, Plugin } from 'src/extend';
 
 export interface CustomType {
   customProp: boolean;
@@ -9,7 +9,8 @@ export interface CustomAssertion {
   customAssert: (foo: string) => string;
 }
 
-export const isCustom = (actual: any): actual is CustomType => ((actual as CustomType).customProp);
+// eslint-disable-next-line max-len
+export const isCustom: IsType<CustomType> = (actual: any): actual is CustomType => ((actual as CustomType).customProp);
 export const customExpect: Expect<CustomType, CustomAssertion> = () => ({
   customAssert: (foo: string) => foo
 });
@@ -28,7 +29,7 @@ export interface CustomAssertion2 {
 }
 
 // eslint-disable-next-line max-len
-export const isCustom2 = (actual: any): actual is CustomType2 => ((actual as CustomType2).customProp2);
+export const isCustom2: IsType<CustomType2> = (actual: any): actual is CustomType2 => ((actual as CustomType2).customProp2);
 export const customExpect2: Expect<CustomType2, CustomAssertion2> = () => ({
   customAssert2: (foo: number) => foo
 });
