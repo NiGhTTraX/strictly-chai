@@ -24,6 +24,7 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext ts .",
     "test": "mocha --opts tests/mocha.opts",
+    "test:coverage": "NODE_ENV=coverage nyc mocha --opts tests/mocha.coverage.opts",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -46,6 +47,7 @@
     "@types/node": "~9.6.5",
     "@types/sinon": "~4.3.1",
     "@types/sinon-chai": "~2.7.29",
+    "babel-plugin-istanbul": "~4.1.6",
     "eslint": "~4.19.1",
     "eslint-import-resolver-babel-module": "~4.0.0",
     "eslint-plugin-import": "~2.11.0",
@@ -55,6 +57,7 @@
     "husky": "~0.14.3",
     "lint-staged": "~7.0.5",
     "mocha": "~5.1.1",
+    "nyc": "~11.8.0",
     "sinon": "~5.0.7",
     "ts-node": "~6.0.0",
     "typescript": "~2.8.1",

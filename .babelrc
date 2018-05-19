@@ -2,5 +2,10 @@
   "presets": [
     "@babel/typescript",
     ["@babel/env", { "target": { "node": "current" } }]
-  ]
+  ],
+  "env": {
+    "coverage": {
+      "plugins": ["istanbul"]
+    }
+  }
 }
