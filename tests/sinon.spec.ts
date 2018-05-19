@@ -1,11 +1,19 @@
 import * as chai from 'chai';
 import { spy } from 'sinon';
-import sinonPlugin from '../src/sinon';
+import sinonPlugin, { isSpy } from '../src/sinon';
 
 const { expect } = chai;
 
 describe('Sinon expect', function () {
   const sinonExpect = sinonPlugin(chai).expect;
+
+  it('isSpy', function () {
+    expect(isSpy({})).to.be.false;
+    expect(isSpy(spy())).to.be.true;
+    const calledSpy = spy();
+    calledSpy();
+    expect(isSpy(calledSpy)).to.be.true;
+  });
 
   it('called', function () {
     const appleSpie = spy();

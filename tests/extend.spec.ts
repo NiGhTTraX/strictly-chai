@@ -50,6 +50,7 @@ describe('Extend', function () {
 
   it('should return the overloaded expect', function () {
     expect(overloadedExpect({ customProp: true }).customAssert('foobar')).to.equal('foobar');
+    expect(overloadedExpect2({ customProp: true }).customAssert('foobar')).to.equal('foobar');
     expect(overloadedExpect2({ customProp2: true }).customAssert2(42)).to.equal(42);
   });
 });
