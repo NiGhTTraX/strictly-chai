@@ -1,12 +1,10 @@
+import { SinonSpy } from 'sinon';
 import { Plugin } from './extend';
 
+// This has no default export.
 const sinonChai = require('sinon-chai');
 
-export interface Spy {
-  called: boolean;
-}
-
-export interface SinonExpect {
+interface SinonExpect {
   to: {
     not: {
       have: {
@@ -25,13 +23,14 @@ export interface SinonExpect {
   }
 }
 
-export const isSpy = (actual: Spy | any): actual is Spy => (actual as Spy).called !== undefined;
+const isSpy = (actual: SinonSpy | any): actual is SinonSpy =>
+  (actual as SinonSpy).called !== undefined;
 
-const plugin: Plugin<Spy, SinonExpect> = chai => {
+const plugin: Plugin<SinonSpy, SinonExpect> = chai => {
   chai.use(sinonChai);
   const { expect } = chai;
 
-  function sinonExpect(actual: Spy): SinonExpect {
+  function sinonExpect(actual: SinonSpy): SinonExpect {
     return {
       to: {
         not: {

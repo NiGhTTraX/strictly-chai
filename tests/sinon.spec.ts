@@ -1,12 +1,13 @@
 import * as chai from 'chai';
 import { spy } from 'sinon';
-import sinonPlugin, { isSpy } from '../src/sinon';
+import sinonPlugin from '../src/sinon';
 import expectTypeErrors from './type-safety';
 
 const { expect } = chai;
 
 describe('Sinon expect', function () {
-  const sinonExpect = sinonPlugin(chai).expect;
+  const plugin = sinonPlugin(chai);
+  const { expect: sinonExpect, isType: isSpy } = plugin;
 
   it('isSpy', function () {
     expect(isSpy({})).to.be.false;
