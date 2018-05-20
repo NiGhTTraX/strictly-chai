@@ -11,7 +11,7 @@
     "@babel/register"
   ],
 
-  "reporter": ["html"],
+  "reporter": ["html", "text"],
   "report-dir": "tests/results/coverage",
 
   "lines": 100,
