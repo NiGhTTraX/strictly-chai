@@ -2,13 +2,16 @@
   "include": [
     "src/**/*.ts"
   ],
-  "extension": [".ts", ".js"],
-  "all": false,
+  "exclude": [
+    "**/*.d.ts"
+  ],
+  "extension": [".ts"],
+  "all": true,
 
   "sourceMap": false,
   "instrument": false,
   "require": [
-    "@babel/register"
+    "./tests/register.ts"
   ],
 
   "reporter": ["html", "text"],
