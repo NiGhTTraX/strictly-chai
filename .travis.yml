@@ -9,3 +9,6 @@ script:
   - npm run lint
   - npm run test:coverage
   - npm run build
+
+after_success:
+  - npm run report-coverage
