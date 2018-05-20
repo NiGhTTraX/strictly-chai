@@ -1,6 +1,8 @@
 strictly-chai
 ----
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/NiGhTTraX/strictly-chai.svg)](https://greenkeeper.io/)
+
 > A statically typed subset of [chai](http://www.chaijs.com) assertions written
 in TypeScript.
 
