@@ -4,7 +4,7 @@ import { Plugin } from './extend';
 // This has no default export.
 const sinonChai = require('sinon-chai');
 
-interface SinonExpect {
+export interface SinonExpect {
   to: {
     not: {
       have: {

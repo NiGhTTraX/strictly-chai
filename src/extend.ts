@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import typedExpect, { BaseAssertionType } from './index';
 
-type Chai = typeof chai;
+export type Chai = typeof chai;
 
 export interface IsType<T> {
   (actual: any): actual is T;
