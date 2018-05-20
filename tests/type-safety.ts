@@ -30,6 +30,7 @@ enum CompilerErrorCode {
  * access.
  */
 export default function expectTypeErrors(fileName: string) {
+  // TODO: let fileName be relative
   const errors = compile(fileName, compilerOptions);
   const lines = fs.readFileSync(fileName, { encoding: 'utf-8' }).split('\n');
 

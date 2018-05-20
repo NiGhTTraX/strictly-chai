@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { extend, Expect, IsType, Plugin } from '../src/extend';
+import expectTypeErrors from './type-safety';
 
 export interface CustomType {
   customProp: boolean;
@@ -52,5 +53,11 @@ describe('Extend', function () {
     expect(overloadedExpect({ customProp: true }).customAssert('foobar')).to.equal('foobar');
     expect(overloadedExpect2({ customProp: true }).customAssert('foobar')).to.equal('foobar');
     expect(overloadedExpect2({ customProp2: true }).customAssert2(42)).to.equal(42);
+  });
+
+  it('should be type safe', function () {
+    this.timeout(5 * 1000);
+
+    expectTypeErrors('tests/type-safety/extend.ts');
   });
 });

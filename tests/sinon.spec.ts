@@ -1,6 +1,7 @@
 import * as chai from 'chai';
 import { spy } from 'sinon';
 import sinonPlugin, { isSpy } from '../src/sinon';
+import expectTypeErrors from './type-safety';
 
 const { expect } = chai;
 
@@ -34,5 +35,11 @@ describe('Sinon expect', function () {
     sinonExpect(appleSpie).to.not.have.been.calledWith(4);
     expect(() => sinonExpect(appleSpie).to.have.been.calledWith(4)).to.throw();
     expect(() => sinonExpect(appleSpie).to.not.have.been.calledWith(1, 2, 3)).to.throw();
+  });
+
+  it('should be type safe', function () {
+    this.timeout(5 * 1000);
+
+    expectTypeErrors('tests/type-safety/sinon.ts');
   });
 });

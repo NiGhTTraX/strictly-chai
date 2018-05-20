@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import typedExpect from '../src/index';
+import expectTypeErrors from './type-safety';
 
 describe('TypedExpect', function () {
   describe('equal', function () {
@@ -79,6 +80,12 @@ describe('TypedExpect', function () {
       expect(() => typedExpect(x).to.equal(z)).to.throw();
       expect(() => typedExpect(x).to.not.equal(x)).to.throw();
     });
+
+    it('should be type safe', function () {
+      this.timeout(5 * 1000);
+
+      expectTypeErrors('tests/type-safety/equal.ts');
+    });
   });
 
   describe('contains', function () {
@@ -146,6 +153,12 @@ describe('TypedExpect', function () {
       typedExpect(x).to.not.contain(z);
       expect(() => typedExpect(x).to.contain(z)).to.throw();
       expect(() => typedExpect(x).to.not.contain(x)).to.throw();
+    });
+
+    it('should be type safe', function () {
+      this.timeout(5 * 1000);
+
+      expectTypeErrors('tests/type-safety/contain.ts');
     });
   });
 });
