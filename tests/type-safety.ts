@@ -25,12 +25,12 @@ enum CompilerErrorCode {
  * result in a type incompatibility compiler error. It also expects that no
  * other type of errors will be thrown.
  *
- * This assumes there won't be more than one call per line. The calls are
- * identified by searching for a method call followed immediately by a property
- * access.
+ * This assumes there won't be more than one call per line. Lines without calls
+ * are allowed.
+ *
+ * @param fileName Relative to the project root, or more precisely to Mocha's cwd.
  */
 export default function expectTypeErrors(fileName: string) {
-  // TODO: let fileName be relative
   const errors = compile(fileName, compilerOptions);
   const lines = fs.readFileSync(fileName, { encoding: 'utf-8' }).split('\n');
 
