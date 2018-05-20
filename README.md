@@ -1,6 +1,5 @@
-strictly-chai
-----
-
+[![Build
+Status](https://travis-ci.com/NiGhTTraX/strictly-chai.svg?branch=master)](https://travis-ci.com/NiGhTTraX/strictly-chai) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/NiGhTTraX/strictly-chai.svg)](https://greenkeeper.io/)
 
 > A statically typed subset of [chai](http://www.chaijs.com) assertions written
