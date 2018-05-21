@@ -1,6 +1,6 @@
 {
   "name": "strictly-chai",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A statically typed subset of chai assertions written in TypeScript",
   "keywords": [
     "assert",
