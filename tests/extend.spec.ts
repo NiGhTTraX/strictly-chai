@@ -45,8 +45,11 @@ describe('Extend', function () {
   const overloadedExpect2 = extend(customPlugin, customPlugin2);
 
   it('should return the original expect', function () {
+    // TODO: check every Assertion type to make sure that BaseAssertionType is correct.
     overloadedExpect({ foo: 'bar' }).to.contain({ foo: 'bar' });
+    overloadedExpect(() => 23).to.not.throw();
     overloadedExpect2({ foo: 'bar' }).to.contain({ foo: 'bar' });
+    overloadedExpect2(() => 23).to.not.throw();
   });
 
   it('should return the overloaded expect', function () {

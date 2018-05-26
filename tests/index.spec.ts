@@ -30,6 +30,12 @@ describe('TypedExpect', function () {
       expect(() => typedExpect(true).to.not.equal(true)).to.throw();
     });
 
+    it('functions', function() {
+      const foo = () => {};
+      typedExpect(foo).to.equal(foo);
+      typedExpect(foo).to.not.equal(() => {});
+    });
+
     it('arrays', function () {
       typedExpect([1, 2, 3]).to.equal([1, 2, 3]);
       typedExpect([1, 2, 3]).to.not.equal([4, 5, 6]);
@@ -159,6 +165,13 @@ describe('TypedExpect', function () {
       this.timeout(5 * 1000);
 
       expectTypeErrors('tests/type-safety/contain.ts');
+    });
+  });
+
+  describe('throw', function () {
+    it('should ', function () {
+      typedExpect(() => { throw new Error(); }).to.throw();
+      typedExpect(() => { }).to.not.throw();
     });
   });
 });

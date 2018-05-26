@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { contains, equals, notContains, notEquals } from './assertions';
 
 export interface ScalarAssertion<T> {
@@ -41,6 +42,16 @@ export interface ObjectAssertion<T, K> {
   }
 }
 
+interface FunctionAssertion {
+  to: {
+    throw: () => void;
+    not: {
+      throw: () => void;
+    }
+  }
+}
+
+function typedExpect<T extends Function>(func: T): ScalarAssertion<T> & FunctionAssertion;
 function typedExpect<T>(array: Array<T>): ScalarAssertion<Array<T>> & VectorAssertion<T>;
 function typedExpect<T>(array: Set<T>): ScalarAssertion<Set<T>> & VectorAssertion<T>;
 function typedExpect(string: string): ScalarAssertion<string> & StringAssertion;
@@ -66,6 +77,19 @@ function typedExpect(actual: any): any {
     };
   }
 
+  if (typeof actual === 'function') {
+    return {
+      to: {
+        equal,
+        throw() { expect(actual).to.throw(); },
+        not: {
+          equal: notEqual,
+          throw() { expect(actual).to.not.throw(); }
+        }
+      }
+    };
+  }
+
   return {
     to: {
       equal,
@@ -82,7 +106,8 @@ export default typedExpect;
 
 // eslint-disable-next-line space-infix-ops
 export type BaseAssertionType<T> =
-  T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<V>
+  T extends Function ? ScalarAssertion<T> & FunctionAssertion
+  : T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<V>
   : T extends Set<infer V> ? ScalarAssertion<Set<V>> & VectorAssertion<V>
   : T extends string ? ScalarAssertion<string> & StringAssertion
   : T extends number ? ScalarAssertion<number>
