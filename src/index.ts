@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { contains, equals, notContains, notEquals } from './assertions';
 
-interface LanguageChain<T> {
+export interface LanguageChain<T> {
   // eslint-disable-next-line no-use-before-define
   to: BaseAssertionType<T>;
 }
@@ -26,7 +26,7 @@ export interface ObjectAssertion<T> extends LanguageChain<T> {
   not: ObjectAssertion<T>;
 }
 
-interface FunctionAssertion<T> extends LanguageChain<T> {
+export interface FunctionAssertion<T> extends LanguageChain<T> {
   throw: () => void;
   not: FunctionAssertion<T>;
 }
