@@ -1,64 +1,53 @@
 import { expect } from 'chai';
 import { contains, equals, notContains, notEquals } from './assertions';
 
-export interface ScalarAssertion<T> {
-  to: {
-    equal: (expected: T) => void;
-    not: {
-      equal: (expected: T) => void;
-    }
-  }
+interface LanguageChain<T> {
+  // eslint-disable-next-line no-use-before-define
+  to: BaseAssertionType<T>;
 }
 
-export interface VectorAssertion<T> {
-  to: {
-    contain: (member: T) => void;
-    not: {
-      contain: (member: T) => void;
-    }
-  }
+export interface ScalarAssertion<T> extends LanguageChain<T> {
+  equal: (expected: T) => void;
+  not: ScalarAssertion<T>;
+}
+
+export interface VectorAssertion<T> extends LanguageChain<T> {
+  contain: (member: T extends Array<infer U> ? U
+  : T extends Set<infer U> ? U
+  : T extends Map<infer K, infer V> ? V
+  : never) => void;
+  not: VectorAssertion<T>
 }
 
 // string[keyof string] is number for some reason so that's why
 // we have this separate interface instead of just using
 // InclusionAssertion<string>.
-export interface StringAssertion {
-  to: {
-    contain: (needle: string) => void;
-    not: {
-      contain: (needle: string) => void;
-    }
-  }
+export interface StringAssertion extends LanguageChain<string> {
+  contain: (needle: string) => void;
+  not: StringAssertion;
 }
 
 // This is separate from InclusionAssertion to be able to
 // use Partial<>.
-export interface ObjectAssertion<T, K> {
-  to: {
-    contain: (partial: Partial<T>) => void;
-    not: {
-      contain: (partial: Partial<T>) => void;
-    }
-  }
+export interface ObjectAssertion<T> extends LanguageChain<T> {
+  contain: (partial: Partial<T>) => void;
+  not: ObjectAssertion<T>;
 }
 
-interface FunctionAssertion {
-  to: {
-    throw: () => void;
-    not: {
-      throw: () => void;
-    }
-  }
+interface FunctionAssertion<T> extends LanguageChain<T> {
+  throw: () => void;
+  not: FunctionAssertion<T>;
 }
 
-function typedExpect<T extends Function>(func: T): ScalarAssertion<T> & FunctionAssertion;
-function typedExpect<T>(array: Array<T>): ScalarAssertion<Array<T>> & VectorAssertion<T>;
-function typedExpect<T>(array: Set<T>): ScalarAssertion<Set<T>> & VectorAssertion<T>;
+function typedExpect<T extends Function>(func: T): ScalarAssertion<T> & FunctionAssertion<T>;
+function typedExpect<T>(array: Array<T>): ScalarAssertion<Array<T>> & VectorAssertion<Array<T>>;
+function typedExpect<T>(array: Set<T>): ScalarAssertion<Set<T>> & VectorAssertion<Set<T>>;
 function typedExpect(string: string): ScalarAssertion<string> & StringAssertion;
 function typedExpect(actual: number): ScalarAssertion<number>;
 function typedExpect(actual: boolean): ScalarAssertion<boolean>;
-function typedExpect<K, V>(actual: Map<K, V>): ScalarAssertion<Map<K, V>> & VectorAssertion<V>;
-function typedExpect<T, K extends keyof T>(object: T): ScalarAssertion<T> & ObjectAssertion<T, K>;
+// eslint-disable-next-line max-len
+function typedExpect<K, V>(actual: Map<K, V>): ScalarAssertion<Map<K, V>> & VectorAssertion<Map<K, V>>;
+function typedExpect<T>(object: T): ScalarAssertion<T> & ObjectAssertion<T>;
 
 function typedExpect(actual: any): any {
   const equal = equals(actual);
@@ -106,11 +95,11 @@ export default typedExpect;
 
 // eslint-disable-next-line space-infix-ops
 export type BaseAssertionType<T> =
-  T extends Function ? ScalarAssertion<T> & FunctionAssertion
-  : T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<V>
-  : T extends Set<infer V> ? ScalarAssertion<Set<V>> & VectorAssertion<V>
+  T extends Function ? ScalarAssertion<T> & FunctionAssertion<T>
+  : T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<Array<V>>
+  : T extends Set<infer V> ? ScalarAssertion<Set<V>> & VectorAssertion<Set<V>>
   : T extends string ? ScalarAssertion<string> & StringAssertion
   : T extends number ? ScalarAssertion<number>
   : T extends boolean ? ScalarAssertion<boolean>
-  : T extends Map<infer K, infer V> ? ScalarAssertion<Map<K, V>> & VectorAssertion<V>
-  : ScalarAssertion<T> & ObjectAssertion<T, keyof T>;
+  : T extends Map<infer K, infer V> ? ScalarAssertion<Map<K, V>> & VectorAssertion<Map<K, V>>
+  : ScalarAssertion<T> & ObjectAssertion<T>;
