@@ -7,11 +7,17 @@ export interface LanguageChain<T> {
 }
 
 export interface ScalarAssertion<T> extends LanguageChain<T> {
+  /**
+   * Assert that the target is strictly and deeply equal to the given value.
+   */
   equal: (expected: T) => void;
   not: ScalarAssertion<T>;
 }
 
 export interface VectorAssertion<T> extends LanguageChain<T> {
+  /**
+   * Assert that the target contains the single given member.
+   */
   contain: (member: T extends Array<infer U> ? U
   : T extends Set<infer U> ? U
   : T extends Map<infer K, infer V> ? V
@@ -22,11 +28,17 @@ export interface VectorAssertion<T> extends LanguageChain<T> {
 
 // This is separate from VectorAssertion to be able to use Partial<>.
 export interface ObjectAssertion<T> extends LanguageChain<T> {
+  /**
+   * Assert that the target deeply contains the given subset.
+   */
   contain: (partial: Partial<T>) => void;
   not: ObjectAssertion<T>;
 }
 
 export interface FunctionAssertion<T> extends LanguageChain<T> {
+  /**
+   * Assert that the target throws an exception when executed.
+   */
   throw: () => void;
   not: FunctionAssertion<T>;
 }

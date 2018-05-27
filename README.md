@@ -7,31 +7,6 @@ Status](https://travis-ci.com/NiGhTTraX/strictly-chai.svg?branch=master)](https:
 in TypeScript.
 
 
-## Philosophy
-
-```js
-expect(new Set([1, 2])).to.contain('a');
-```
-
-While the above is perfectly valid JS and chai will throw an AssertionError at
-runtime, it is desirable to turn that into a compile time error when using
-TypeScript.
-
-Using this library instead of `chai.expect` in the assertion above will
-fail to compile with the following:
-
-```
-Error:(54, 47) TS2345: Argument of type '"a"' is not assignable
-to parameter of type 'number'.
-```
-
-
-## But wait, what about `@types/chai`?
-
-`@types/chai` declares all the arguments as `any` so using chai
-directly in TypeScript will not provide any type checking.
-
-
 ## Usage
 
 ![object-contains](./docs/object-contains.png)
@@ -43,13 +18,42 @@ so check out their docs on usage. The only difference is that the `.equal`
 assertion is by default deep (equivalent to `.deep.equal`).
 
 
+## Philosophy
+
+```js
+expect(new Set([1, 2])).to.contain('a');
+```
+
+While the above is perfectly valid JS and chai will throw an AssertionError at
+runtime, it was this author's desire to turn that into a compile time error when
+using TypeScript.
+
+Using this library instead of `chai.expect` in the assertion above will
+fail to compile with the following:
+
+```
+TS2345: Argument of type '"a"' is not assignable to parameter of type 'number'.
+```
+
+
+## But wait, what about `@types/chai`?
+
+`@types/chai` declares most arguments as `any` so using chai directly in
+TypeScript will not provide meaningful type checking.
+
+Could this library export stricter types to be used in place of `@types/chai`,
+instead of also providing a "re-implementation" (the current implementation is
+a drop-in replacement) of chai? Perhaps, but the real strength of this library
+is the ability to extend it for new types - see below for details.
+
+
 ## Plugins
 
 You can extend this library, similarly to how `chai.use` works, and keep type
 safety using `extend`:
 
 ```ts
-import { Expect, extend, IsType, Plugin } from 'strictly-chai/extend';
+import { extend, Expect, IsType, Plugin } from 'strictly-chai/extend';
 
 type MyAwesomeType = {
   myAwesomeProp: 42
@@ -58,7 +62,7 @@ type MyAwesomeType = {
 interface MyAwesomeAssertion {
   to: {
     be: {
-      awesome: () => void;
+      awesome: (expected: number) => void;
     }
   }
 }
@@ -86,8 +90,11 @@ const plugin: Plugin<MyAwesomeType, MyAwesomeAssertion> = chai => {
 const expect = extend(plugin);
 
 // This is our awesome assertion.
-expect({ myAwesomeProp: 42 }).to.be.awesome();
+expect({ myAwesomeProp: 42 }).to.be.awesome(23);
 
-// And this is from the inherited base assertions.
+// TS2345: Argument of type '"foo"' is not assignable to parameter of type 'number'.
+expect({ myAwesomeProp: 42 }).to.be.awesome('foo');
+
+// This is from the inherited base assertions.
 expect('foobar').to.contain('foo');
 ```

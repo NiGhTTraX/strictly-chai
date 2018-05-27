@@ -12,8 +12,15 @@ export interface Expect<T, I> {
 }
 
 export interface Plugin<T, I> {
+  /**
+   * You can use the given chai instance to install plugins using chai.use.
+   */
   (chai: Chai): {
     expect: Expect<T, I>;
+    /**
+     * Assert that the target is of the given type. This will be used to know
+     * when to call the given `expect` method.
+     */
     isType: IsType<T>;
   }
 }
@@ -24,7 +31,10 @@ function extend<T1, R1>(plugin: Plugin<T1, R1>): ((actual: T1) => R1) & (<T>(act
 function extend<T1, R1, T2, R2>(p1: Plugin<T1, R1>, p2: Plugin<T2, R2>): ((actual: T1) => R1) & ((actual: T2) => R2) & (<T>(actual: T) => BaseAssertionType<T>);
 
 /**
- * Overload typedExpect to support new types.
+ * Overload the expect method to support new types.
+ *
+ * The plugins will applied in the given order which translates to the
+ * overload order for the expect method.
  */
 function extend(...p: Plugin<any, any>[]) {
   if (p.length === 1) {
