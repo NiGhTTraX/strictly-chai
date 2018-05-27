@@ -35,6 +35,10 @@ function extend<T1, R1, T2, R2>(p1: Plugin<T1, R1>, p2: Plugin<T2, R2>): ((actua
  *
  * The plugins will applied in the given order which translates to the
  * overload order for the expect method.
+ *
+ * Unfortunately, due to how this method is written to leverage the TS compiler,
+ * you can only extend with a limited number of plugins. It is trivial to add
+ * more but it involves repetitive boilerplate. Contributions are welcome :)
  */
 function extend(...p: Plugin<any, any>[]) {
   if (p.length === 1) {

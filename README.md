@@ -52,7 +52,7 @@ You can extend this library, similarly to how `chai.use` works, and keep type
 safety using `extend`:
 
 ```ts
-import { extend, Expect, IsType, Plugin } from 'strictly-chai/extend';
+import { extend, Expect, IsType, Plugin } from 'strictly-chai/dist/src/extend';
 
 type MyAwesomeType = {
   myAwesomeProp: 42
