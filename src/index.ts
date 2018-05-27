@@ -15,20 +15,12 @@ export interface VectorAssertion<T> extends LanguageChain<T> {
   contain: (member: T extends Array<infer U> ? U
   : T extends Set<infer U> ? U
   : T extends Map<infer K, infer V> ? V
+  : T extends string ? string
   : never) => void;
   not: VectorAssertion<T>
 }
 
-// string[keyof string] is number for some reason so that's why
-// we have this separate interface instead of just using
-// InclusionAssertion<string>.
-export interface StringAssertion extends LanguageChain<string> {
-  contain: (needle: string) => void;
-  not: StringAssertion;
-}
-
-// This is separate from InclusionAssertion to be able to
-// use Partial<>.
+// This is separate from VectorAssertion to be able to use Partial<>.
 export interface ObjectAssertion<T> extends LanguageChain<T> {
   contain: (partial: Partial<T>) => void;
   not: ObjectAssertion<T>;
@@ -42,7 +34,7 @@ interface FunctionAssertion<T> extends LanguageChain<T> {
 function typedExpect<T extends Function>(func: T): ScalarAssertion<T> & FunctionAssertion<T>;
 function typedExpect<T>(array: Array<T>): ScalarAssertion<Array<T>> & VectorAssertion<Array<T>>;
 function typedExpect<T>(array: Set<T>): ScalarAssertion<Set<T>> & VectorAssertion<Set<T>>;
-function typedExpect(string: string): ScalarAssertion<string> & StringAssertion;
+function typedExpect(string: string): ScalarAssertion<string> & VectorAssertion<string>;
 function typedExpect(actual: number): ScalarAssertion<number>;
 function typedExpect(actual: boolean): ScalarAssertion<boolean>;
 // eslint-disable-next-line max-len
@@ -98,7 +90,7 @@ export type BaseAssertionType<T> =
   T extends Function ? ScalarAssertion<T> & FunctionAssertion<T>
   : T extends Array<infer V> ? ScalarAssertion<Array<V>> & VectorAssertion<Array<V>>
   : T extends Set<infer V> ? ScalarAssertion<Set<V>> & VectorAssertion<Set<V>>
-  : T extends string ? ScalarAssertion<string> & StringAssertion
+  : T extends string ? ScalarAssertion<string> & VectorAssertion<string>
   : T extends number ? ScalarAssertion<number>
   : T extends boolean ? ScalarAssertion<boolean>
   : T extends Map<infer K, infer V> ? ScalarAssertion<Map<K, V>> & VectorAssertion<Map<K, V>>
