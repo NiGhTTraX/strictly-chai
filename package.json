@@ -23,7 +23,7 @@
     "compile": "tsc --declaration --outDir ./dist",
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext ts .",
-    "test": "mocha --opts tests/mocha.opts",
+    "test": "TS_NODE_CACHE=0 mocha --opts tests/mocha.opts",
     "test:coverage": "NODE_ENV=coverage nyc mocha --opts tests/mocha.coverage.opts",
     "report-coverage": "nyc report --reporter=json && codecov -f tests/results/coverage/coverage-final.json",
     "precommit": "lint-staged"
