@@ -70,6 +70,6 @@
     "typescript-eslint-parser": "~15.0.0"
   },
   "files": [
-    "dist/**/*"
+    "dist/src/**/*"
   ]
 }
