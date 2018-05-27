@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import * as ts from 'typescript';
 import { expect } from 'chai';
 
@@ -61,7 +62,11 @@ export default function expectTypeErrors(fileName: string) {
 }
 
 function compile(fileName: string, options: ts.CompilerOptions): CompilationError[] {
-  const program = ts.createProgram([fileName], Object.assign({}, options, { noEmit: true }));
+  const srcFiles = [fileName].concat(path.join(__dirname, '../src/@types/chai/index.d.ts'));
+
+  const program = ts.createProgram(srcFiles, Object.assign({}, options, {
+    noEmit: true
+  }));
 
   const emitResult = program.emit();
   const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
