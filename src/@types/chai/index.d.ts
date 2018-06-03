@@ -46,7 +46,7 @@ declare namespace Chai {
 
   interface Assertion2<T> extends LanguageChains2<T> {
     not: Assertion2<T>;
-    deep: Deep;
+    deep: Deep2<T>;
     ordered: Ordered;
     nested: Nested;
     any: KeyFilter;
@@ -250,6 +250,16 @@ declare namespace Chai {
     equal: Equal;
     equals: Equal;
     eq: Equal;
+    include: Include;
+    property: Property;
+    members: Members;
+    ordered: Ordered;
+  }
+
+  interface Deep2<T> {
+    equal: Equal2<T>;
+    equals: Equal2<T>;
+    eq: Equal2<T>;
     include: Include;
     property: Property;
     members: Members;
@@ -1749,6 +1759,7 @@ declare namespace Chai {
     constructor(message: string, _props?: any, ssf?: Function);
     name: string;
     message: string;
+    // noinspection JSUnusedGlobalSymbols
     showDiff: boolean;
     stack: string;
   }
