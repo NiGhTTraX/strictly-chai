@@ -20,7 +20,7 @@ declare namespace Chai {
   }
 
   export interface AssertionStatic {
-    (target: any, message?: string): Assertion;
+    <T>(target: T, message?: string): Assertion2<T>;
   }
 
   export type Operator = string; // "==" | "===" | ">" | ">=" | "<" | "<=" | "!=" | "!==";
@@ -43,6 +43,70 @@ declare namespace Chai {
     (actual: Function, expected?: string|RegExp, message?: string): void;
     (actual: Function, constructor: Error|Function, expected?: string|RegExp, message?: string): void;
   }
+
+  interface Assertion2<T> extends LanguageChains2<T> {
+    not: Assertion2<T>;
+    deep: Deep;
+    ordered: Ordered;
+    nested: Nested;
+    any: KeyFilter;
+    all: KeyFilter;
+    a: TypeComparison;
+    an: TypeComparison;
+    include: Include;
+    includes: Include;
+    contain: Include;
+    contains: Include;
+    ok: Assertion2<T>;
+    true: Assertion2<T>;
+    false: Assertion2<T>;
+    null: Assertion2<T>;
+    undefined: Assertion2<T>;
+    NaN: Assertion2<T>;
+    exist: Assertion2<T>;
+    empty: Assertion2<T>;
+    arguments: Assertion2<T>;
+    Arguments: Assertion2<T>;
+    equal: Equal2<T>;
+    equals: Equal2<T>;
+    eq: Equal2<T>;
+    eql: Equal2<T>;
+    eqls: Equal2<T>;
+    property: Property;
+    ownProperty: OwnProperty;
+    haveOwnProperty: OwnProperty;
+    ownPropertyDescriptor: OwnPropertyDescriptor;
+    haveOwnPropertyDescriptor: OwnPropertyDescriptor;
+    length: Length;
+    lengthOf: Length;
+    match: Match;
+    matches: Match;
+    string(string: string, message?: string): Assertion2<T>;
+    keys: Keys;
+    key(string: string): Assertion2<T>;
+    throw: Throw;
+    throws: Throw;
+    Throw: Throw;
+    respondTo: RespondTo;
+    respondsTo: RespondTo;
+    itself: Assertion2<T>;
+    satisfy: Satisfy;
+    satisfies: Satisfy;
+    closeTo: CloseTo;
+    approximately: CloseTo;
+    members: Members;
+    increase: PropertyChange;
+    increases: PropertyChange;
+    decrease: PropertyChange;
+    decreases: PropertyChange;
+    change: PropertyChange;
+    changes: PropertyChange;
+    extensible: Assertion2<T>;
+    sealed: Assertion2<T>;
+    frozen: Assertion2<T>;
+    oneOf(list: any[], message?: string): Assertion2<T>;
+  }
+
 
   interface Assertion extends LanguageChains, NumericComparison, TypeComparison {
     not: Assertion;
@@ -125,6 +189,24 @@ declare namespace Chai {
     does: Assertion;
   }
 
+  interface LanguageChains2<T> {
+    to: Assertion2<T>;
+    be: Assertion2<T>;
+    been: Assertion2<T>;
+    is: Assertion2<T>;
+    that: Assertion2<T>;
+    which: Assertion2<T>;
+    and: Assertion2<T>;
+    has: Assertion2<T>;
+    have: Assertion2<T>;
+    with: Assertion2<T>;
+    at: Assertion2<T>;
+    of: Assertion2<T>;
+    same: Assertion2<T>;
+    but: Assertion2<T>;
+    does: Assertion2<T>;
+  }
+
   interface NumericComparison {
     above: NumberComparer;
     gt: NumberComparer;
@@ -184,6 +266,10 @@ declare namespace Chai {
 
   interface Equal {
     (value: any, message?: string): Assertion;
+  }
+
+  interface Equal2<T> {
+    (value: T, message?: string): Assertion2<T>;
   }
 
   interface Property {
