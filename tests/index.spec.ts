@@ -14,4 +14,10 @@ describe('expect', function () {
       expectTypeErrors('tests/not-type-safe/contain.ts');
     });
   });
+
+  describe('numbers', function () {
+    it('should be type safe', function () {
+      expectTypeErrors('tests/not-type-safe/numbers.ts');
+    });
+  });
 });

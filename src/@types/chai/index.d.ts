@@ -44,7 +44,7 @@ declare namespace Chai {
     (actual: Function, constructor: Error|Function, expected?: string|RegExp, message?: string): void;
   }
 
-  interface Assertion2<T> extends LanguageChains2<T> {
+  interface Assertion2<T> extends LanguageChains2<T>, NumericComparison2 {
     not: Assertion2<T>;
     deep: Deep2<T>;
     ordered: Ordered;
@@ -92,8 +92,8 @@ declare namespace Chai {
     itself: Assertion2<T>;
     satisfy: Satisfy;
     satisfies: Satisfy;
-    closeTo: CloseTo;
-    approximately: CloseTo;
+    closeTo: CloseTo2;
+    approximately: CloseTo2;
     members: Members2<T>;
     increase: PropertyChange;
     increases: PropertyChange;
@@ -221,8 +221,27 @@ declare namespace Chai {
     within(start: Date, finish: Date, message?: string): Assertion;
   }
 
+  interface NumericComparison2 {
+    above: NumberComparer2;
+    gt: NumberComparer2;
+    greaterThan: NumberComparer2;
+    least: NumberComparer2;
+    gte: NumberComparer2;
+    below: NumberComparer2;
+    lt: NumberComparer2;
+    lessThan: NumberComparer2;
+    most: NumberComparer2;
+    lte: NumberComparer2;
+    within(start: number, finish: number, message?: string): Assertion2<number>;
+    within(start: Date, finish: Date, message?: string): Assertion2<Date>;
+  }
+
   interface NumberComparer {
     (value: number | Date, message?: string): Assertion;
+  }
+
+  interface NumberComparer2 {
+    (value: number | Date, message?: string): Assertion2<number>;
   }
 
   interface TypeComparison {
@@ -237,6 +256,10 @@ declare namespace Chai {
 
   interface CloseTo {
     (expected: number, delta: number, message?: string): Assertion;
+  }
+
+  interface CloseTo2 {
+    (expected: number, delta: number, message?: string): Assertion2<number>;
   }
 
   interface Nested {
