@@ -53,10 +53,10 @@ declare namespace Chai {
     all: KeyFilter;
     a: TypeComparison;
     an: TypeComparison;
-    include: Include;
-    includes: Include;
-    contain: Include;
-    contains: Include;
+    include: Include2<T>;
+    includes: Include2<T>;
+    contain: Include2<T>;
+    contains: Include2<T>;
     ok: Assertion2<T>;
     true: Assertion2<T>;
     false: Assertion2<T>;
@@ -107,6 +107,23 @@ declare namespace Chai {
     oneOf(list: any[], message?: string): Assertion2<T>;
   }
 
+  interface LanguageChains2<T> {
+    to: Assertion2<T>;
+    be: Assertion2<T>;
+    been: Assertion2<T>;
+    is: Assertion2<T>;
+    that: Assertion2<T>;
+    which: Assertion2<T>;
+    and: Assertion2<T>;
+    has: Assertion2<T>;
+    have: Assertion2<T>;
+    with: Assertion2<T>;
+    at: Assertion2<T>;
+    of: Assertion2<T>;
+    same: Assertion2<T>;
+    but: Assertion2<T>;
+    does: Assertion2<T>;
+  }
 
   interface Assertion extends LanguageChains, NumericComparison, TypeComparison {
     not: Assertion;
@@ -189,24 +206,6 @@ declare namespace Chai {
     does: Assertion;
   }
 
-  interface LanguageChains2<T> {
-    to: Assertion2<T>;
-    be: Assertion2<T>;
-    been: Assertion2<T>;
-    is: Assertion2<T>;
-    that: Assertion2<T>;
-    which: Assertion2<T>;
-    and: Assertion2<T>;
-    has: Assertion2<T>;
-    have: Assertion2<T>;
-    with: Assertion2<T>;
-    at: Assertion2<T>;
-    of: Assertion2<T>;
-    same: Assertion2<T>;
-    but: Assertion2<T>;
-    does: Assertion2<T>;
-  }
-
   interface NumericComparison {
     above: NumberComparer;
     gt: NumberComparer;
@@ -260,7 +259,7 @@ declare namespace Chai {
     equal: Equal2<T>;
     equals: Equal2<T>;
     eq: Equal2<T>;
-    include: Include;
+    include: Include2<T>;
     property: Property;
     members: Members;
     ordered: Ordered;
@@ -303,6 +302,20 @@ declare namespace Chai {
     (value: Object | string | number, message?: string): Assertion;
     keys: Keys;
     deep: Deep;
+    ordered: Ordered;
+    members: Members;
+    any: KeyFilter;
+    all: KeyFilter;
+  }
+
+  interface Include2<T> {
+    (value: T extends string ? string
+      : T extends Array<infer U> ? U
+      : T extends Set<infer U> ? U
+      : T extends Map<infer K, infer V> ? V
+      : Partial<T>, message?: string): Assertion2<T>;
+    keys: Keys;
+    deep: Deep2<T>;
     ordered: Ordered;
     members: Members;
     any: KeyFilter;
