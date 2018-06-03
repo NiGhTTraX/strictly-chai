@@ -94,7 +94,7 @@ declare namespace Chai {
     satisfies: Satisfy;
     closeTo: CloseTo;
     approximately: CloseTo;
-    members: Members;
+    members: Members2<T>;
     increase: PropertyChange;
     increases: PropertyChange;
     decrease: PropertyChange;
@@ -261,7 +261,7 @@ declare namespace Chai {
     eq: Equal2<T>;
     include: Include2<T>;
     property: Property;
-    members: Members;
+    members: Members2<T>;
     ordered: Ordered;
   }
 
@@ -317,7 +317,7 @@ declare namespace Chai {
     keys: Keys;
     deep: Deep2<T>;
     ordered: Ordered;
-    members: Members;
+    members: Members2<T>;
     any: KeyFilter;
     all: KeyFilter;
   }
@@ -346,6 +346,10 @@ declare namespace Chai {
 
   interface Members {
     (set: any[], message?: string): Assertion;
+  }
+
+  interface Members2<T> {
+    (set: T extends Array<infer U> ? U[] : never, message?: string): Assertion;
   }
 
   interface PropertyChange {

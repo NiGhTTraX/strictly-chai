@@ -16,6 +16,8 @@ expect(new Set([{ foo: { bar: 2 } }])).to.deep.include({ foo: { bar: 2 } });
 
 expect(new Map([[1, 'a'], [2, 'b']])).to.include('b');
 
+expect([{ a: 1 }, { a: 2 }, { a: 3 }]).to.deep.include.members([{ a: 2 }]);
+
 interface Foo {
   foo: string;
   bar: () => void;

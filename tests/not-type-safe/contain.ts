@@ -16,3 +16,6 @@ expect(new Map([['key', 1]])).to.include('1');
 expect(new Map([['key', '1']])).to.include(1);
 expect(new Map([['key', true]])).to.include(1);
 expect(new Map([['key', { foo: 1 }]])).to.include(1);
+
+expect([{ a: 1 }, { a: 2 }, { a: 3 }]).to.deep.include.members([{ a: false }]);
+
