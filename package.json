@@ -64,7 +64,7 @@
     "lint-staged": "~7.1.1",
     "mocha": "~5.2.0",
     "nyc": "~12.0.1",
-    "sinon": "~5.0.7",
+    "sinon": "~5.1.1",
     "ts-node": "~6.1.0",
     "typescript": "^2.8",
     "typescript-eslint-parser": "~15.0.0"
