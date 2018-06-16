@@ -20,7 +20,8 @@ declare namespace Chai {
   }
 
   export interface AssertionStatic {
-    <T>(target: T, message?: string): Assertion2<T>;
+    (target: number, message?: string): NumericAssertion;
+    <T>(target: T, message?: string): NotNumberAssertion<T>;
   }
 
   export type Operator = string; // "==" | "===" | ">" | ">=" | "<" | "<=" | "!=" | "!==";
@@ -44,8 +45,8 @@ declare namespace Chai {
     (actual: Function, constructor: Error|Function, expected?: string|RegExp, message?: string): void;
   }
 
-  interface Assertion2<T> extends LanguageChains2<T>, NumericComparison2 {
-    not: Assertion2<T>;
+  interface NotNumberAssertion<T> extends LanguageChains2<T> {
+    not: NotNumberAssertion<T>;
     deep: Deep2<T>;
     ordered: Ordered;
     nested: Nested;
@@ -57,16 +58,16 @@ declare namespace Chai {
     includes: Include2<T>;
     contain: Include2<T>;
     contains: Include2<T>;
-    ok: Assertion2<T>;
-    true: Assertion2<T>;
-    false: Assertion2<T>;
-    null: Assertion2<T>;
-    undefined: Assertion2<T>;
-    NaN: Assertion2<T>;
-    exist: Assertion2<T>;
-    empty: Assertion2<T>;
-    arguments: Assertion2<T>;
-    Arguments: Assertion2<T>;
+    ok: NotNumberAssertion<T>;
+    true: NotNumberAssertion<T>;
+    false: NotNumberAssertion<T>;
+    null: NotNumberAssertion<T>;
+    undefined: NotNumberAssertion<T>;
+    NaN: NotNumberAssertion<T>;
+    exist: NotNumberAssertion<T>;
+    empty: NotNumberAssertion<T>;
+    arguments: NotNumberAssertion<T>;
+    Arguments: NotNumberAssertion<T>;
     equal: Equal2<T>;
     equals: Equal2<T>;
     eq: Equal2<T>;
@@ -81,19 +82,17 @@ declare namespace Chai {
     lengthOf: Length;
     match: Match;
     matches: Match;
-    string(string: string, message?: string): Assertion2<T>;
+    string(string: string, message?: string): NotNumberAssertion<T>;
     keys: Keys;
-    key(string: string): Assertion2<T>;
+    key(string: string): NotNumberAssertion<T>;
     throw: Throw;
     throws: Throw;
     Throw: Throw;
     respondTo: RespondTo;
     respondsTo: RespondTo;
-    itself: Assertion2<T>;
+    itself: NotNumberAssertion<T>;
     satisfy: Satisfy;
     satisfies: Satisfy;
-    closeTo: CloseTo2;
-    approximately: CloseTo2;
     members: Members2<T>;
     increase: PropertyChange;
     increases: PropertyChange;
@@ -101,28 +100,47 @@ declare namespace Chai {
     decreases: PropertyChange;
     change: PropertyChange;
     changes: PropertyChange;
-    extensible: Assertion2<T>;
-    sealed: Assertion2<T>;
-    frozen: Assertion2<T>;
-    oneOf(list: any[], message?: string): Assertion2<T>;
+    extensible: NotNumberAssertion<T>;
+    sealed: NotNumberAssertion<T>;
+    frozen: NotNumberAssertion<T>;
+    oneOf(list: any[], message?: string): NotNumberAssertion<T>;
+    within(start: Date, finish: Date, message?: string): NotNumberAssertion<Date>;
   }
 
   interface LanguageChains2<T> {
-    to: Assertion2<T>;
-    be: Assertion2<T>;
-    been: Assertion2<T>;
-    is: Assertion2<T>;
-    that: Assertion2<T>;
-    which: Assertion2<T>;
-    and: Assertion2<T>;
-    has: Assertion2<T>;
-    have: Assertion2<T>;
-    with: Assertion2<T>;
-    at: Assertion2<T>;
-    of: Assertion2<T>;
-    same: Assertion2<T>;
-    but: Assertion2<T>;
-    does: Assertion2<T>;
+    to: NotNumberAssertion<T>;
+    be: NotNumberAssertion<T>;
+    been: NotNumberAssertion<T>;
+    is: NotNumberAssertion<T>;
+    that: NotNumberAssertion<T>;
+    which: NotNumberAssertion<T>;
+    and: NotNumberAssertion<T>;
+    has: NotNumberAssertion<T>;
+    have: NotNumberAssertion<T>;
+    with: NotNumberAssertion<T>;
+    at: NotNumberAssertion<T>;
+    of: NotNumberAssertion<T>;
+    same: NotNumberAssertion<T>;
+    but: NotNumberAssertion<T>;
+    does: NotNumberAssertion<T>;
+  }
+
+  interface NumberLanguageChains {
+    to: NumericAssertion;
+    be: NumericAssertion;
+    been: NumericAssertion;
+    is: NumericAssertion;
+    that: NumericAssertion;
+    which: NumericAssertion;
+    and: NumericAssertion;
+    has: NumericAssertion;
+    have: NumericAssertion;
+    with: NumericAssertion;
+    at: NumericAssertion;
+    of: NumericAssertion;
+    same: NumericAssertion;
+    but: NumericAssertion;
+    does: NumericAssertion;
   }
 
   interface Assertion extends LanguageChains, NumericComparison, TypeComparison {
@@ -221,7 +239,13 @@ declare namespace Chai {
     within(start: Date, finish: Date, message?: string): Assertion;
   }
 
-  interface NumericComparison2 {
+  interface NumericAssertion extends NumberLanguageChains {
+    not: NumericAssertion;
+    equal: Equal2<number>;
+    equals: Equal2<number>;
+    eq: Equal2<number>;
+    eql: Equal2<number>;
+    eqls: Equal2<number>;
     above: NumberComparer2;
     gt: NumberComparer2;
     greaterThan: NumberComparer2;
@@ -232,8 +256,9 @@ declare namespace Chai {
     lessThan: NumberComparer2;
     most: NumberComparer2;
     lte: NumberComparer2;
-    within(start: number, finish: number, message?: string): Assertion2<number>;
-    within(start: Date, finish: Date, message?: string): Assertion2<Date>;
+    closeTo: CloseTo2;
+    approximately: CloseTo2;
+    within(start: number, finish: number, message?: string): NumericAssertion;
   }
 
   interface NumberComparer {
@@ -241,7 +266,7 @@ declare namespace Chai {
   }
 
   interface NumberComparer2 {
-    (value: number | Date, message?: string): Assertion2<number>;
+    (value: number | Date, message?: string): NumericAssertion;
   }
 
   interface TypeComparison {
@@ -259,7 +284,7 @@ declare namespace Chai {
   }
 
   interface CloseTo2 {
-    (expected: number, delta: number, message?: string): Assertion2<number>;
+    (expected: number, delta: number, message?: string): NumericAssertion;
   }
 
   interface Nested {
@@ -301,7 +326,7 @@ declare namespace Chai {
   }
 
   interface Equal2<T> {
-    (value: T, message?: string): Assertion2<T>;
+    (value: T, message?: string): NotNumberAssertion<T>;
   }
 
   interface Property {
@@ -336,7 +361,7 @@ declare namespace Chai {
       : T extends Array<infer U> ? U
       : T extends Set<infer U> ? U
       : T extends Map<infer K, infer V> ? V
-      : Partial<T>, message?: string): Assertion2<T>;
+      : Partial<T>, message?: string): NotNumberAssertion<T>;
     keys: Keys;
     deep: Deep2<T>;
     ordered: Ordered;

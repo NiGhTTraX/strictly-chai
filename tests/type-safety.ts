@@ -15,6 +15,7 @@ interface CompilationError {
 }
 
 enum CompilerErrorCode {
+  NON_EXISTENT_METHOD = 2339,
   INCOMPATIBLE_ARG = 2345,
   NO_COMMON_PROPERTIES = 2559,
   TOO_MANY_ARGS = 2554,
@@ -43,7 +44,8 @@ export default function expectTypeErrors(fileName: string) {
       CompilerErrorCode.INCOMPATIBLE_ARG,
       CompilerErrorCode.NO_COMMON_PROPERTIES,
       CompilerErrorCode.TOO_MANY_ARGS,
-      CompilerErrorCode.TOO_FEW_ARGS
+      CompilerErrorCode.TOO_FEW_ARGS,
+      CompilerErrorCode.NON_EXISTENT_METHOD
     ], `Non type error detected on ${fileName}:${line}:${column} ${message}`).to.include(code);
 
     expect(acc.get(line), `More than 1 error detected on ${fileName}:${line} (${lines[line]})`)
