@@ -45,7 +45,7 @@
     "@babel/core": "~7.0.1",
     "@babel/preset-env": "~7.0.0",
     "@babel/preset-typescript": "~7.0.0",
-    "@babel/register": "~7.0.0-beta.47",
+    "@babel/register": "~7.0.0",
     "@nighttrax/eslint-config": "~1.0.1",
     "@types/chai": "~4.1.3",
     "@types/mocha": "~5.2.0",
